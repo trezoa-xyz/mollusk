@@ -14,9 +14,9 @@ chrono = { workspace = true }
 num-format = { workspace = true }
 serde_json = { workspace = true }
 mollusk-svm = { workspace = true }
-solana-account = { workspace = true }
-solana-instruction = { workspace = true }
-solana-pubkey = { workspace = true }
+trezoa-account = { workspace = true }
+trezoa-instruction = { workspace = true }
+trezoa-pubkey = { workspace = true }
 
 [dev-dependencies]
-solana-logger = { workspace = true }
+trezoa-logger = { workspace = true }

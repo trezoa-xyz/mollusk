@@ -21,7 +21,7 @@ impl<'a> MolluskComputeUnitBenchResult<'a> {
 pub fn write_results(
     out_dir: &Path,
     table_header: &str,
-    solana_version: &str,
+    trezoa_version: &str,
     results: Vec<MolluskComputeUnitBenchResult>,
 ) {
     let path = out_dir.join("compute_units.md");
@@ -38,7 +38,7 @@ pub fn write_results(
         .map(|content| parse_last_md_table(content));
 
     // Prepare to write a new table.
-    let mut md_table = md_header(table_header, solana_version);
+    let mut md_table = md_header(table_header, trezoa_version);
 
     // Evaluate the results against the previous table, if any.
     // If there are changes, write a new table.
@@ -80,16 +80,16 @@ pub fn write_results(
     }
 }
 
-fn md_header(table_header: &str, solana_version: &str) -> String {
+fn md_header(table_header: &str, trezoa_version: &str) -> String {
     format!(
         r#"#### {}
 
-Solana CLI Version: {}
+Trezoa CLI Version: {}
 
 | Name | CUs | Delta |
 |------|------|-------|
 "#,
-        table_header, solana_version,
+        table_header, trezoa_version,
     )
 }
 

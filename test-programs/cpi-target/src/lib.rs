@@ -1,12 +1,12 @@
 use {
-    solana_account_info::{next_account_info, AccountInfo},
-    solana_program_error::{ProgramError, ProgramResult},
-    solana_pubkey::Pubkey,
+    trezoa_account_info::{next_account_info, AccountInfo},
+    trezoa_program_error::{ProgramError, ProgramResult},
+    trezoa_pubkey::Pubkey,
 };
 
-solana_pubkey::declare_id!("MD24T7azhc2q9ZXaeskbLpmVA41k7StzTGgcfvGcpHj");
+trezoa_pubkey::declare_id!("MD24T7azhc2q9ZXaeskbLpmVA41k7StzTGgcfvGcpHj");
 
-solana_program_entrypoint::entrypoint!(process_instruction);
+trezoa_program_entrypoint::entrypoint!(process_instruction);
 
 fn process_instruction(
     program_id: &Pubkey,

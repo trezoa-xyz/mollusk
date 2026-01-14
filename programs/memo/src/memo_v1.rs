@@ -1,6 +1,6 @@
-use {mollusk_svm::Mollusk, solana_account::Account, solana_pubkey::Pubkey};
+use {mollusk_svm::Mollusk, trezoa_account::Account, trezoa_pubkey::Pubkey};
 
-pub const ID: Pubkey = solana_pubkey::pubkey!("Memo1UhkJRfHyvLMcVucJwxXeuD728EqVDDwQDxFMNo");
+pub const ID: Pubkey = trezoa_pubkey::pubkey!("Memo1UhkJRfHyvLMcVucJwxXeuD728EqVDDwQDxFMNo");
 
 pub const ELF: &[u8] = include_bytes!("elf/memo-v1.so");
 

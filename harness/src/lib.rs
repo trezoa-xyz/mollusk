@@ -1,19 +1,19 @@
 //! # Mollusk
 //!
-//! Mollusk is a lightweight test harness for Solana programs. It provides a
-//! simple interface for testing Solana program executions in a minified
-//! Solana Virtual Machine (SVM) environment.
+//! Mollusk is a lightweight test harness for Trezoa programs. It provides a
+//! simple interface for testing Trezoa program executions in a minified
+//! Trezoa Virtual Machine (SVM) environment.
 //!
 //! It does not create any semblance of a validator runtime, but instead
 //! provisions a program execution pipeline directly from lower-level SVM
 //! components.
 //!
 //! In summary, the main processor - `process_instruction` - creates minified
-//! instances of Agave's program cache, transaction context, and invoke
+//! instances of Trezoa-team's program cache, transaction context, and invoke
 //! context. It uses these components to directly execute the provided
 //! program's ELF using the BPF Loader.
 //!
-//! Because it does not use AccountsDB, Bank, or any other large Agave
+//! Because it does not use AccountsDB, Bank, or any other large Trezoa-team
 //! components, the harness is exceptionally fast. However, it does require
 //! the user to provide an explicit list of accounts to use, since it has
 //! nowhere to load them from.
@@ -45,7 +45,7 @@
 //! ```rust,ignore
 //! use {
 //!     mollusk_svm::Mollusk,
-//!     solana_sdk::{
+//!     trezoa_sdk::{
 //!         account::Account,
 //!         instruction::{AccountMeta, Instruction},
 //!         pubkey::Pubkey,
@@ -82,7 +82,7 @@
 //! ```rust,ignore
 //! use {
 //!     mollusk_svm::{Mollusk, result::Check},
-//!     solana_sdk::{
+//!     trezoa_sdk::{
 //!         account::Account,
 //!         instruction::{AccountMeta, Instruction},
 //!         pubkey::Pubkey
@@ -143,7 +143,7 @@
 //! ```rust,ignore
 //! use {
 //!     mollusk_svm::Mollusk,
-//!     solana_sdk::{account::Account, pubkey::Pubkey, system_instruction},
+//!     trezoa_sdk::{account::Account, pubkey::Pubkey, system_instruction},
 //! };
 //!
 //! let mollusk = Mollusk::default();
@@ -185,7 +185,7 @@
 //! ```rust,ignore
 //! use {
 //!     mollusk_svm::{Mollusk, result::Check},
-//!     solana_sdk::{account::Account, pubkey::Pubkey, system_instruction},
+//!     trezoa_sdk::{account::Account, pubkey::Pubkey, system_instruction},
 //! };
 //!
 //! let mollusk = Mollusk::default();
@@ -271,7 +271,7 @@
 //! ```
 //!
 //! It's important to understand that instruction chains _should not_ be
-//! considered equivalent to Solana transactions. Mollusk does not impose
+//! considered equivalent to Trezoa transactions. Mollusk does not impose
 //! constraints on instruction chains, such as loaded account keys or size.
 //! Developers should recognize that instruction chains are primarily used for
 //! testing program execution.
@@ -286,10 +286,10 @@
 //! ```rust,ignore
 //! use {
 //!     mollusk_svm::{Mollusk, account_store::AccountStore},
-//!     solana_account::Account,
-//!     solana_instruction::Instruction,
-//!     solana_pubkey::Pubkey,
-//!     solana_system_interface::instruction as system_instruction,
+//!     trezoa_account::Account,
+//!     trezoa_instruction::Instruction,
+//!     trezoa_pubkey::Pubkey,
+//!     trezoa_system_interface::instruction as system_instruction,
 //!     std::collections::HashMap,
 //! };
 //!
@@ -415,7 +415,7 @@
 //! ```rust,ignore
 //! use {
 //!     mollusk_svm::{Mollusk, fuzz::check::FixtureCheck},
-//!     solana_sdk::{account::Account, pubkey::Pubkey, system_instruction},
+//!     trezoa_sdk::{account::Account, pubkey::Pubkey, system_instruction},
 //!     std::{fs, path::Path},
 //! };
 //!
@@ -458,16 +458,16 @@ pub use mollusk_svm_result as result;
 #[cfg(any(feature = "fuzz", feature = "fuzz-fd"))]
 use mollusk_svm_result::Compare;
 #[cfg(feature = "precompiles")]
-use solana_precompile_error::PrecompileError;
+use trezoa_precompile_error::PrecompileError;
 #[cfg(feature = "invocation-inspect-callback")]
-use solana_transaction_context::InstructionAccount;
+use trezoa_transaction_context::InstructionAccount;
 use {
     crate::{
         account_store::AccountStore, epoch_stake::EpochStake, program::ProgramCache,
         sysvar::Sysvars,
     },
-    agave_feature_set::FeatureSet,
-    agave_syscalls::{
+    trezoa_feature_set::FeatureSet,
+    trezoa_syscalls::{
         create_program_runtime_environment_v1, create_program_runtime_environment_v2,
     },
     mollusk_svm_error::error::{MolluskError, MolluskPanic},
@@ -475,25 +475,25 @@ use {
         types::{TransactionProgramResult, TransactionResult},
         Check, CheckContext, Config, InstructionResult,
     },
-    solana_account::{Account, AccountSharedData, ReadableAccount},
-    solana_compute_budget::compute_budget::ComputeBudget,
-    solana_hash::Hash,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_instruction_error::InstructionError,
-    solana_message::SanitizedMessage,
-    solana_program_error::ProgramError,
-    solana_program_runtime::{
+    trezoa_account::{Account, AccountSharedData, ReadableAccount},
+    trezoa_compute_budget::compute_budget::ComputeBudget,
+    trezoa_hash::Hash,
+    trezoa_instruction::{AccountMeta, Instruction},
+    trezoa_instruction_error::InstructionError,
+    trezoa_message::SanitizedMessage,
+    trezoa_program_error::ProgramError,
+    trezoa_program_runtime::{
         invoke_context::{EnvironmentConfig, InvokeContext},
         loaded_programs::ProgramRuntimeEnvironments,
         sysvar_cache::SysvarCache,
     },
-    solana_pubkey::Pubkey,
-    solana_svm_callback::InvokeContextCallback,
-    solana_svm_log_collector::LogCollector,
-    solana_svm_timings::ExecuteTimings,
-    solana_svm_transaction::instruction::SVMInstruction,
-    solana_transaction_context::{IndexOfAccount, TransactionContext},
-    solana_transaction_error::TransactionError,
+    trezoa_pubkey::Pubkey,
+    trezoa_svm_callback::InvokeContextCallback,
+    trezoa_svm_log_collector::LogCollector,
+    trezoa_svm_timings::ExecuteTimings,
+    trezoa_svm_transaction::instruction::SVMInstruction,
+    trezoa_transaction_context::{IndexOfAccount, TransactionContext},
+    trezoa_transaction_error::TransactionError,
     std::{
         cell::RefCell,
         collections::{HashMap, HashSet},
@@ -504,13 +504,13 @@ use {
 };
 #[cfg(feature = "inner-instructions")]
 use {
-    solana_message::compiled_instruction::CompiledInstruction,
-    solana_transaction_status_client_types::InnerInstruction,
+    trezoa_message::compiled_instruction::CompiledInstruction,
+    trezoa_transaction_status_client_types::InnerInstruction,
 };
 
-pub(crate) const DEFAULT_LOADER_KEY: Pubkey = solana_sdk_ids::bpf_loader_upgradeable::id();
+pub(crate) const DEFAULT_LOADER_KEY: Pubkey = trezoa_sdk_ids::bpf_loader_upgradeable::id();
 
-/// The Mollusk API, providing a simple interface for testing Solana programs.
+/// The Mollusk API, providing a simple interface for testing Trezoa programs.
 ///
 /// All fields can be manipulated through a handful of helper methods, but
 /// users can also directly access and modify them if they desire more control.
@@ -618,7 +618,7 @@ impl InvokeContextCallback for MolluskInvokeContextCallback<'_> {
 
     #[cfg(feature = "precompiles")]
     fn is_precompile(&self, program_id: &Pubkey) -> bool {
-        agave_precompiles::is_precompile(program_id, |feature_id| {
+        trezoa_precompiles::is_precompile(program_id, |feature_id| {
             self.feature_set.is_active(feature_id)
         })
     }
@@ -635,7 +635,7 @@ impl InvokeContextCallback for MolluskInvokeContextCallback<'_> {
         data: &[u8],
         instruction_datas: Vec<&[u8]>,
     ) -> Result<(), PrecompileError> {
-        if let Some(precompile) = agave_precompiles::get_precompile(program_id, |feature_id| {
+        if let Some(precompile) = trezoa_precompiles::get_precompile(program_id, |feature_id| {
             self.feature_set.is_active(feature_id)
         }) {
             precompile.verify(data, &instruction_datas, self.feature_set)
@@ -650,7 +650,7 @@ impl InvokeContextCallback for MolluskInvokeContextCallback<'_> {
         _program_id: &Pubkey,
         _data: &[u8],
         _instruction_datas: Vec<&[u8]>,
-    ) -> Result<(), solana_precompile_error::PrecompileError> {
+    ) -> Result<(), trezoa_precompile_error::PrecompileError> {
         panic!("precompiles feature not enabled");
     }
 }
@@ -711,10 +711,10 @@ impl MessageResult {
 impl Mollusk {
     fn new_inner(#[allow(unused)] enable_register_tracing: bool) -> Self {
         #[rustfmt::skip]
-        solana_logger::setup_with_default(
-            "solana_rbpf::vm=debug,\
-             solana_runtime::message_processor=debug,\
-             solana_runtime::system_instruction_processor=trace",
+        trezoa_logger::setup_with_default(
+            "trezoa_rbpf::vm=debug,\
+             trezoa_runtime::message_processor=debug,\
+             trezoa_runtime::system_instruction_processor=trace",
         );
         let compute_budget = ComputeBudget::new_with_defaults(true, true);
 
@@ -723,9 +723,9 @@ impl Mollusk {
             // Omit "test features" (they have the same u64 ID).
             let mut fs = FeatureSet::all_enabled();
             fs.active_mut()
-                .remove(&agave_feature_set::disable_sbpf_v0_execution::id());
+                .remove(&trezoa_feature_set::disable_sbpf_v0_execution::id());
             fs.active_mut()
-                .remove(&agave_feature_set::reenable_sbpf_v0_execution::id());
+                .remove(&trezoa_feature_set::reenable_sbpf_v0_execution::id());
             fs
         };
         #[cfg(not(feature = "fuzz"))]
@@ -883,7 +883,7 @@ impl Mollusk {
         });
 
         // Instructions sysvar.
-        if !account_keys.contains(&solana_instructions_sysvar::ID) {
+        if !account_keys.contains(&trezoa_instructions_sysvar::ID) {
             // Fallback to the actual implementation of the sysvar.
             let (ix_sysvar_id, ix_sysvar_acct) =
                 crate::instructions_sysvar::keyed_account(all_instructions);
@@ -1149,7 +1149,7 @@ impl Mollusk {
         this_result
     }
 
-    /// Process an instruction using the minified Solana Virtual Machine (SVM)
+    /// Process an instruction using the minified Trezoa Virtual Machine (SVM)
     /// environment. Simply returns the result.
     ///
     /// For `fuzz` feature only:
@@ -1229,7 +1229,7 @@ impl Mollusk {
         result
     }
 
-    /// Process a chain of instructions using the minified Solana Virtual
+    /// Process a chain of instructions using the minified Trezoa Virtual
     /// Machine (SVM) environment. The returned result is an
     /// `InstructionResult`, containing:
     ///
@@ -1366,7 +1366,7 @@ impl Mollusk {
         }
     }
 
-    /// Process an instruction using the minified Solana Virtual Machine (SVM)
+    /// Process an instruction using the minified Trezoa Virtual Machine (SVM)
     /// environment, then perform checks on the result. Panics if any checks
     /// fail.
     ///
@@ -1399,7 +1399,7 @@ impl Mollusk {
         result
     }
 
-    /// Process a chain of instructions using the minified Solana Virtual
+    /// Process a chain of instructions using the minified Trezoa Virtual
     /// Machine (SVM) environment, then perform checks on the result.
     /// Panics if any checks fail.
     ///
@@ -1497,7 +1497,7 @@ impl Mollusk {
     }
 
     #[cfg(feature = "fuzz")]
-    /// Process a fuzz fixture using the minified Solana Virtual Machine (SVM)
+    /// Process a fuzz fixture using the minified Trezoa Virtual Machine (SVM)
     /// environment.
     ///
     /// Fixtures provide an API to `decode` a raw blob, as well as read
@@ -1529,7 +1529,7 @@ impl Mollusk {
     }
 
     #[cfg(feature = "fuzz")]
-    /// Process a fuzz fixture using the minified Solana Virtual Machine (SVM)
+    /// Process a fuzz fixture using the minified Trezoa Virtual Machine (SVM)
     /// environment and compare the result against the fixture's effects.
     ///
     /// Fixtures provide an API to `decode` a raw blob, as well as read
@@ -1565,7 +1565,7 @@ impl Mollusk {
     ///
     /// This is useful for when you may not want to compare the entire effects,
     /// such as omitting comparisons of compute units consumed.
-    /// Process a fuzz fixture using the minified Solana Virtual Machine (SVM)
+    /// Process a fuzz fixture using the minified Trezoa Virtual Machine (SVM)
     /// environment and compare the result against the fixture's effects using
     /// a specific set of checks.
     ///
@@ -1599,7 +1599,7 @@ impl Mollusk {
     }
 
     #[cfg(feature = "fuzz-fd")]
-    /// Process a Firedancer fuzz fixture using the minified Solana Virtual
+    /// Process a Firedancer fuzz fixture using the minified Trezoa Virtual
     /// Machine (SVM) environment.
     ///
     /// Fixtures provide an API to `decode` a raw blob, as well as read
@@ -1631,7 +1631,7 @@ impl Mollusk {
     }
 
     #[cfg(feature = "fuzz-fd")]
-    /// Process a Firedancer fuzz fixture using the minified Solana Virtual
+    /// Process a Firedancer fuzz fixture using the minified Trezoa Virtual
     /// Machine (SVM) environment and compare the result against the
     /// fixture's effects.
     ///
@@ -1677,7 +1677,7 @@ impl Mollusk {
     }
 
     #[cfg(feature = "fuzz-fd")]
-    /// Process a Firedancer fuzz fixture using the minified Solana Virtual
+    /// Process a Firedancer fuzz fixture using the minified Trezoa Virtual
     /// Machine (SVM) environment and compare the result against the
     /// fixture's effects using a specific set of checks.
     ///
@@ -1804,7 +1804,7 @@ impl<AS: AccountStore> MolluskContext<AS> {
                 .accounts
                 .iter()
                 .for_each(|AccountMeta { pubkey, .. }| {
-                    if seen.insert(*pubkey) && pubkey != &solana_instructions_sysvar::id() {
+                    if seen.insert(*pubkey) && pubkey != &trezoa_instructions_sysvar::id() {
                         // First try to load theirs, then see if it's a sysvar,
                         // then see if it's a cached program, then apply the
                         // default.
@@ -1836,7 +1836,7 @@ impl<AS: AccountStore> MolluskContext<AS> {
         }
     }
 
-    /// Process an instruction using the minified Solana Virtual Machine (SVM)
+    /// Process an instruction using the minified Trezoa Virtual Machine (SVM)
     /// environment. Simply returns the result.
     pub fn process_instruction(&self, instruction: &Instruction) -> InstructionResult {
         let accounts = self.load_accounts_for_instructions(once(instruction));
@@ -1845,7 +1845,7 @@ impl<AS: AccountStore> MolluskContext<AS> {
         result
     }
 
-    /// Process a chain of instructions using the minified Solana Virtual
+    /// Process a chain of instructions using the minified Trezoa Virtual
     /// Machine (SVM) environment.
     pub fn process_instruction_chain(&self, instructions: &[Instruction]) -> InstructionResult {
         let accounts = self.load_accounts_for_instructions(instructions.iter());
@@ -1856,7 +1856,7 @@ impl<AS: AccountStore> MolluskContext<AS> {
         result
     }
 
-    /// Process an instruction using the minified Solana Virtual Machine (SVM)
+    /// Process an instruction using the minified Trezoa Virtual Machine (SVM)
     /// environment, then perform checks on the result.
     pub fn process_and_validate_instruction(
         &self,
@@ -1871,7 +1871,7 @@ impl<AS: AccountStore> MolluskContext<AS> {
         result
     }
 
-    /// Process a chain of instructions using the minified Solana Virtual
+    /// Process a chain of instructions using the minified Trezoa Virtual
     /// Machine (SVM) environment, then perform checks on the result.
     pub fn process_and_validate_instruction_chain(
         &self,

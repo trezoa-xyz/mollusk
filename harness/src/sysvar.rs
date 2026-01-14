@@ -1,21 +1,21 @@
-//! Module for working with Solana sysvars.
+//! Module for working with Trezoa sysvars.
 
 use {
-    solana_account::{Account, ReadableAccount},
-    solana_clock::{Clock, Slot},
-    solana_epoch_rewards::EpochRewards,
-    solana_epoch_schedule::EpochSchedule,
-    solana_hash::Hash,
-    solana_program_runtime::sysvar_cache::SysvarCache,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_slot_hashes::{SlotHashes, MAX_ENTRIES as SLOT_HASHES_MAX_ENTRIES},
-    solana_stake_interface::stake_history::{StakeHistory, StakeHistoryEntry},
-    solana_sysvar::{self, last_restart_slot::LastRestartSlot, SysvarSerialize},
-    solana_sysvar_id::SysvarId,
+    trezoa_account::{Account, ReadableAccount},
+    trezoa_clock::{Clock, Slot},
+    trezoa_epoch_rewards::EpochRewards,
+    trezoa_epoch_schedule::EpochSchedule,
+    trezoa_hash::Hash,
+    trezoa_program_runtime::sysvar_cache::SysvarCache,
+    trezoa_pubkey::Pubkey,
+    trezoa_rent::Rent,
+    trezoa_slot_hashes::{SlotHashes, MAX_ENTRIES as SLOT_HASHES_MAX_ENTRIES},
+    trezoa_stake_interface::stake_history::{StakeHistory, StakeHistoryEntry},
+    trezoa_sysvar::{self, last_restart_slot::LastRestartSlot, SysvarSerialize},
+    trezoa_sysvar_id::SysvarId,
 };
 
-// Agave's sysvar cache is difficult to work with, so Mollusk offers a wrapper
+// Trezoa-team's sysvar cache is difficult to work with, so Mollusk offers a wrapper
 // around it for modifying its contents.
 /// Mollusk sysvars.
 pub struct Sysvars {
@@ -65,7 +65,7 @@ impl Sysvars {
         let account = Account {
             lamports,
             data,
-            owner: solana_sdk_ids::sysvar::id(),
+            owner: trezoa_sdk_ids::sysvar::id(),
             executable: false,
             ..Default::default()
         };
@@ -250,7 +250,7 @@ impl From<&Sysvars> for SysvarCache {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_stake_interface::stake_history::StakeHistoryEntry, std::ops::Deref};
+    use {super::*, trezoa_stake_interface::stake_history::StakeHistoryEntry, std::ops::Deref};
 
     #[test]
     fn test_warp_to_slot() {

@@ -3,10 +3,10 @@
 
 use {
     mollusk_svm_error::error::{MolluskError, MolluskPanic},
-    solana_account::{Account, AccountSharedData, WritableAccount},
-    solana_instruction::Instruction,
-    solana_message::{LegacyMessage, Message, SanitizedMessage},
-    solana_pubkey::Pubkey,
+    trezoa_account::{Account, AccountSharedData, WritableAccount},
+    trezoa_instruction::Instruction,
+    trezoa_message::{LegacyMessage, Message, SanitizedMessage},
+    trezoa_pubkey::Pubkey,
     std::collections::{HashMap, HashSet},
 };
 
@@ -54,7 +54,7 @@ fn build_transaction_accounts(
                 return (*key, program_account.into());
             }
 
-            if *key == solana_instructions_sysvar::ID {
+            if *key == trezoa_instructions_sysvar::ID {
                 if let Some((_, provided_account)) = accounts.iter().find(|(k, _)| k == key) {
                     return (*key, AccountSharedData::from(provided_account.clone()));
                 }

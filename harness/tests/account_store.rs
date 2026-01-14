@@ -1,11 +1,11 @@
 use {
     mollusk_svm::{result::Check, Mollusk},
-    solana_account::{Account, ReadableAccount},
-    solana_instruction::{AccountMeta, Instruction},
-    solana_program_error::ProgramError,
-    solana_pubkey::Pubkey,
-    solana_system_interface::error::SystemError,
-    solana_system_program::system_processor::DEFAULT_COMPUTE_UNITS,
+    trezoa_account::{Account, ReadableAccount},
+    trezoa_instruction::{AccountMeta, Instruction},
+    trezoa_program_error::ProgramError,
+    trezoa_pubkey::Pubkey,
+    trezoa_system_interface::error::SystemError,
+    trezoa_system_program::system_processor::DEFAULT_COMPUTE_UNITS,
     std::collections::HashMap,
 };
 
@@ -24,18 +24,18 @@ fn test_transfer_with_context() {
     // Initialize accounts in the store
     account_store.insert(
         sender,
-        Account::new(base_lamports, 0, &solana_sdk_ids::system_program::id()),
+        Account::new(base_lamports, 0, &trezoa_sdk_ids::system_program::id()),
     );
     account_store.insert(
         recipient,
-        Account::new(base_lamports, 0, &solana_sdk_ids::system_program::id()),
+        Account::new(base_lamports, 0, &trezoa_sdk_ids::system_program::id()),
     );
 
     let context = mollusk.with_context(account_store);
 
     // Process the transfer instruction
     let result = context.process_and_validate_instruction(
-        &solana_system_interface::instruction::transfer(&sender, &recipient, transfer_amount),
+        &trezoa_system_interface::instruction::transfer(&sender, &recipient, transfer_amount),
         &[
             Check::success(),
             Check::compute_units(DEFAULT_COMPUTE_UNITS),
@@ -75,15 +75,15 @@ fn test_multiple_transfers_with_persistent_state() {
     // Initialize accounts
     account_store.insert(
         alice,
-        Account::new(initial_lamports, 0, &solana_sdk_ids::system_program::id()),
+        Account::new(initial_lamports, 0, &trezoa_sdk_ids::system_program::id()),
     );
     account_store.insert(
         bob,
-        Account::new(initial_lamports, 0, &solana_sdk_ids::system_program::id()),
+        Account::new(initial_lamports, 0, &trezoa_sdk_ids::system_program::id()),
     );
     account_store.insert(
         charlie,
-        Account::new(initial_lamports, 0, &solana_sdk_ids::system_program::id()),
+        Account::new(initial_lamports, 0, &trezoa_sdk_ids::system_program::id()),
     );
 
     let context = mollusk.with_context(account_store);
@@ -95,13 +95,13 @@ fn test_multiple_transfers_with_persistent_state() {
 
     // First transfer: Alice -> Bob
     let instruction1 =
-        solana_system_interface::instruction::transfer(&alice, &bob, transfer1_amount);
+        trezoa_system_interface::instruction::transfer(&alice, &bob, transfer1_amount);
     let result1 = context.process_and_validate_instruction(&instruction1, &checks);
     assert!(!result1.program_result.is_err());
 
     // Second transfer: Bob -> Charlie
     let instruction2 =
-        solana_system_interface::instruction::transfer(&bob, &charlie, transfer2_amount);
+        trezoa_system_interface::instruction::transfer(&bob, &charlie, transfer2_amount);
     let result2 = context.process_and_validate_instruction(&instruction2, &checks);
     assert!(!result2.program_result.is_err());
 
@@ -144,7 +144,7 @@ fn test_account_store_sysvars_and_programs() {
             .expect("Main program account should exist");
         assert_eq!(
             main_program_account.owner,
-            solana_sdk_ids::bpf_loader_upgradeable::id()
+            trezoa_sdk_ids::bpf_loader_upgradeable::id()
         );
         assert!(main_program_account.executable);
     }
@@ -168,10 +168,10 @@ fn test_account_store_sysvars_and_programs() {
         &[3],
         vec![
             AccountMeta::new(key, true),
-            AccountMeta::new(solana_sdk_ids::incinerator::id(), false),
-            AccountMeta::new_readonly(solana_sdk_ids::system_program::id(), false),
+            AccountMeta::new(trezoa_sdk_ids::incinerator::id(), false),
+            AccountMeta::new_readonly(trezoa_sdk_ids::system_program::id(), false),
             // Arbitrarily include the `Clock` sysvar account
-            AccountMeta::new_readonly(solana_sdk_ids::sysvar::clock::id(), false),
+            AccountMeta::new_readonly(trezoa_sdk_ids::sysvar::clock::id(), false),
             // Also include our additional program account
             AccountMeta::new_readonly(other_program_id, false),
         ],
@@ -182,9 +182,9 @@ fn test_account_store_sysvars_and_programs() {
 
     // Verify clock sysvar was loaded.
     let clock_account = store
-        .get(&solana_sdk_ids::sysvar::clock::id())
+        .get(&trezoa_sdk_ids::sysvar::clock::id())
         .expect("Clock sysvar should exist");
-    assert_eq!(clock_account.owner, solana_sdk_ids::sysvar::id());
+    assert_eq!(clock_account.owner, trezoa_sdk_ids::sysvar::id());
 
     // Verify our additional program was loaded.
     let additional_program_account = store
@@ -207,7 +207,7 @@ fn test_account_store_default_account() {
 
     // Try to transfer from a non-existent account (should get default account)
     let instruction =
-        solana_system_interface::instruction::transfer(&non_existent_key, &recipient, 1000);
+        trezoa_system_interface::instruction::transfer(&non_existent_key, &recipient, 1000);
 
     // This should fail because the default account has 0 lamports
     context.process_and_validate_instruction(

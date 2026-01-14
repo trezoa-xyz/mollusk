@@ -4,12 +4,12 @@ use {
         result::{Check, CheckContext},
         Mollusk,
     },
-    solana_account::Account,
-    solana_instruction::{error::InstructionError, AccountMeta, Instruction},
-    solana_program_error::ProgramError,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_system_interface::error::SystemError,
+    trezoa_account::Account,
+    trezoa_instruction::{error::InstructionError, AccountMeta, Instruction},
+    trezoa_program_error::ProgramError,
+    trezoa_pubkey::Pubkey,
+    trezoa_rent::Rent,
+    trezoa_system_interface::error::SystemError,
 };
 
 #[test]
@@ -88,12 +88,12 @@ fn test_transfer() {
 
     let payer = Pubkey::new_unique();
     let payer_lamports = 100_000_000;
-    let payer_account = Account::new(payer_lamports, 0, &solana_sdk_ids::system_program::id());
+    let payer_account = Account::new(payer_lamports, 0, &trezoa_sdk_ids::system_program::id());
 
     let recipient = Pubkey::new_unique();
     let recipient_lamports = 0;
     let recipient_account =
-        Account::new(recipient_lamports, 0, &solana_sdk_ids::system_program::id());
+        Account::new(recipient_lamports, 0, &trezoa_sdk_ids::system_program::id());
 
     let transfer_amount = 2_000_000_u64;
 
@@ -106,7 +106,7 @@ fn test_transfer() {
             vec![
                 AccountMeta::new(payer, true),
                 AccountMeta::new(recipient, false),
-                AccountMeta::new_readonly(solana_sdk_ids::system_program::id(), false),
+                AccountMeta::new_readonly(trezoa_sdk_ids::system_program::id(), false),
             ],
         )
     };
@@ -178,7 +178,7 @@ fn test_non_rent_exempt_transfer() {
 
     let payer = Pubkey::new_unique();
     let payer_lamports = 100_000_000;
-    let payer_account = Account::new(payer_lamports, 0, &solana_sdk_ids::system_program::id());
+    let payer_account = Account::new(payer_lamports, 0, &trezoa_sdk_ids::system_program::id());
 
     // Use deterministic address for explicit panic matching
     let recipient = Pubkey::new_from_array([0x01; 32]);
@@ -192,7 +192,7 @@ fn test_non_rent_exempt_transfer() {
             vec![
                 AccountMeta::new(payer, true),
                 AccountMeta::new(recipient, false),
-                AccountMeta::new_readonly(solana_sdk_ids::system_program::id(), false),
+                AccountMeta::new_readonly(trezoa_sdk_ids::system_program::id(), false),
             ],
         )
     };
@@ -225,8 +225,8 @@ fn test_close_account() {
         &[3],
         vec![
             AccountMeta::new(key, true),
-            AccountMeta::new(solana_sdk_ids::incinerator::id(), false),
-            AccountMeta::new_readonly(solana_sdk_ids::system_program::id(), false),
+            AccountMeta::new(trezoa_sdk_ids::incinerator::id(), false),
+            AccountMeta::new_readonly(trezoa_sdk_ids::system_program::id(), false),
         ],
     );
 
@@ -239,7 +239,7 @@ fn test_close_account() {
             &account_not_signer_ix,
             &[
                 (key, account.clone()),
-                (solana_sdk_ids::incinerator::id(), Account::default()),
+                (trezoa_sdk_ids::incinerator::id(), Account::default()),
                 keyed_account_for_system_program(),
             ],
             &[Check::err(ProgramError::MissingRequiredSignature)],
@@ -251,7 +251,7 @@ fn test_close_account() {
         &instruction,
         &[
             (key, account.clone()),
-            (solana_sdk_ids::incinerator::id(), Account::default()),
+            (trezoa_sdk_ids::incinerator::id(), Account::default()),
             keyed_account_for_system_program(),
         ],
         &[
@@ -261,7 +261,7 @@ fn test_close_account() {
                 .closed() // The rest is unnecessary, just testing.
                 .data(&[])
                 .lamports(0)
-                .owner(&solana_sdk_ids::system_program::id())
+                .owner(&trezoa_sdk_ids::system_program::id())
                 .space(0)
                 .build(),
         ],
@@ -491,12 +491,12 @@ fn test_inner_instructions_transfer() {
 
     let payer = Pubkey::new_unique();
     let payer_lamports = 100_000_000;
-    let payer_account = Account::new(payer_lamports, 0, &solana_sdk_ids::system_program::id());
+    let payer_account = Account::new(payer_lamports, 0, &trezoa_sdk_ids::system_program::id());
 
     let recipient = Pubkey::new_unique();
     let recipient_lamports = 0;
     let recipient_account =
-        Account::new(recipient_lamports, 0, &solana_sdk_ids::system_program::id());
+        Account::new(recipient_lamports, 0, &trezoa_sdk_ids::system_program::id());
 
     let transfer_amount = 2_000_000_u64;
 
@@ -509,7 +509,7 @@ fn test_inner_instructions_transfer() {
             vec![
                 AccountMeta::new(payer, true),
                 AccountMeta::new(recipient, false),
-                AccountMeta::new_readonly(solana_sdk_ids::system_program::id(), false),
+                AccountMeta::new_readonly(trezoa_sdk_ids::system_program::id(), false),
             ],
         )
     };
@@ -543,7 +543,7 @@ fn test_inner_instructions_transfer() {
     let program_id_index = inner_ix.instruction.program_id_index as usize;
     assert_eq!(
         account_keys[program_id_index],
-        solana_sdk_ids::system_program::id(),
+        trezoa_sdk_ids::system_program::id(),
         "Inner instruction program_id_index should point to the system program"
     );
 

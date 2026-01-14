@@ -1,13 +1,13 @@
-#![cfg(target_os = "solana")]
+#![cfg(target_os = "trezoa")]
 
 use {
-    solana_account_info::AccountInfo,
-    solana_instructions_sysvar::{load_current_index_checked, load_instruction_at_checked},
-    solana_program_error::ProgramError,
-    solana_pubkey::Pubkey,
+    trezoa_account_info::AccountInfo,
+    trezoa_instructions_sysvar::{load_current_index_checked, load_instruction_at_checked},
+    trezoa_program_error::ProgramError,
+    trezoa_pubkey::Pubkey,
 };
 
-solana_program_entrypoint::entrypoint!(process_instruction);
+trezoa_program_entrypoint::entrypoint!(process_instruction);
 
 fn process_instruction(
     program_id: &Pubkey,
@@ -21,7 +21,7 @@ fn process_instruction(
     let ix_sysvar_account = &accounts[last_account_index];
 
     // Validate the instructions sysvar account.
-    if !solana_instructions_sysvar::check_id(ix_sysvar_account.key) {
+    if !trezoa_instructions_sysvar::check_id(ix_sysvar_account.key) {
         Err(ProgramError::InvalidAccountOwner)?
     }
 

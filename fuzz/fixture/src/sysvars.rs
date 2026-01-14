@@ -8,14 +8,14 @@ use {
         StakeHistory as ProtoStakeHistory, StakeHistoryEntry as ProtoStakeHistoryEntry,
         SysvarContext as ProtoSysvars,
     },
-    solana_clock::Clock,
-    solana_epoch_rewards::EpochRewards,
-    solana_epoch_schedule::EpochSchedule,
-    solana_hash::Hash,
-    solana_keccak_hasher::Hasher,
-    solana_rent::Rent,
-    solana_slot_hashes::{SlotHash, SlotHashes},
-    solana_stake_interface::stake_history::{StakeHistory, StakeHistoryEntry},
+    trezoa_clock::Clock,
+    trezoa_epoch_rewards::EpochRewards,
+    trezoa_epoch_schedule::EpochSchedule,
+    trezoa_hash::Hash,
+    trezoa_keccak_hasher::Hasher,
+    trezoa_rent::Rent,
+    trezoa_slot_hashes::{SlotHash, SlotHashes},
+    trezoa_stake_interface::stake_history::{StakeHistory, StakeHistoryEntry},
 };
 
 /// A fixture of runtime sysvars.

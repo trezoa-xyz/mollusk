@@ -1,6 +1,6 @@
 //! Configuration and context for result validation.
 
-use {solana_pubkey::Pubkey, solana_rent::Rent};
+use {trezoa_pubkey::Pubkey, trezoa_rent::Rent};
 
 pub struct Config {
     pub panic: bool,

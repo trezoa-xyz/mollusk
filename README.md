@@ -1,19 +1,19 @@
 # Mollusk
 
-Mollusk is a lightweight test harness for Solana programs. It provides a
-simple interface for testing Solana program executions in a minified
-Solana Virtual Machine (SVM) environment.
+Mollusk is a lightweight test harness for Trezoa programs. It provides a
+simple interface for testing Trezoa program executions in a minified
+Trezoa Virtual Machine (SVM) environment.
 
 It does not create any semblance of a validator runtime, but instead
 provisions a program execution pipeline directly from lower-level SVM
 components.
 
 In summary, the main processor - `process_instruction` - creates minified
-instances of Agave's program cache, transaction context, and invoke
+instances of Trezoa-team's program cache, transaction context, and invoke
 context. It uses these components to directly execute the provided
 program's ELF using the BPF Loader.
 
-Because it does not use AccountsDB, Bank, or any other large Agave
+Because it does not use AccountsDB, Bank, or any other large Trezoa-team
 components, the harness is exceptionally fast. However, it does require
 the user to provide an explicit list of accounts to use, since it has
 nowhere to load them from.
@@ -44,7 +44,7 @@ also returned.
 ```rust
 use {
     mollusk_svm::Mollusk,
-    solana_sdk::{account::Account, instruction::{AccountMeta, Instruction}, pubkey::Pubkey},
+    trezoa_sdk::{account::Account, instruction::{AccountMeta, Instruction}, pubkey::Pubkey},
 };
 
 let program_id = Pubkey::new_unique();
@@ -77,7 +77,7 @@ the `Check` enum, which provides a set of common checks.
 ```rust
 use {
     mollusk_svm::{Mollusk, result::Check},
-    solana_sdk::{
+    trezoa_sdk::{
         account::Account,
         instruction::{AccountMeta, Instruction},
         pubkey::Pubkey
@@ -138,7 +138,7 @@ is also returned.
 ```rust
 use {
     mollusk_svm::Mollusk,
-    solana_sdk::{account::Account, pubkey::Pubkey, system_instruction},
+    trezoa_sdk::{account::Account, pubkey::Pubkey, system_instruction},
 };
 
 let mollusk = Mollusk::default();
@@ -180,7 +180,7 @@ last instruction in the chain.
 ```rust
 use {
     mollusk_svm::{Mollusk, result::Check},
-    solana_sdk::{account::Account, pubkey::Pubkey, system_instruction},
+    trezoa_sdk::{account::Account, pubkey::Pubkey, system_instruction},
 };
 
 let mollusk = Mollusk::default();
@@ -266,7 +266,7 @@ mollusk.process_and_validate_instruction_chain(
 ```
 
 It's important to understand that instruction chains _should not_ be
-considered equivalent to Solana transactions. Mollusk does not impose
+considered equivalent to Trezoa transactions. Mollusk does not impose
 constraints on instruction chains, such as loaded account keys or size.
 Developers should recognize that instruction chains are primarily used for
 testing program execution.
@@ -289,10 +289,10 @@ To use `MolluskContext`, you need to provide an implementation of the
 ```rust
 use {
     mollusk_svm::{Mollusk, account_store::AccountStore},
-    solana_account::Account,
-    solana_instruction::Instruction,
-    solana_pubkey::Pubkey,
-    solana_system_interface::instruction as system_instruction,
+    trezoa_account::Account,
+    trezoa_instruction::Instruction,
+    trezoa_pubkey::Pubkey,
+    trezoa_system_interface::instruction as system_instruction,
     std::collections::HashMap,
 };
 
@@ -345,7 +345,7 @@ to implement your own.
 
 ## Benchmarking Compute Units
 The Mollusk Compute Unit Bencher can be used to benchmark the compute unit
-usage of Solana programs. It provides a simple API for developers to write
+usage of Trezoa programs. It provides a simple API for developers to write
 benchmarks for their programs, which can be checked while making changes to
 the program.
 
@@ -362,7 +362,7 @@ use {
 };
 
 // Optionally disable logging.
-solana_logger::setup_with("");
+trezoa_logger::setup_with("");
 
 /* Instruction & accounts setup ... */
 
@@ -476,7 +476,7 @@ consumed.
 ```rust
 use {
     mollusk_svm::{Mollusk, fuzz::check::FixtureCheck},
-    solana_sdk::{account::Account, pubkey::Pubkey, system_instruction},
+    trezoa_sdk::{account::Account, pubkey::Pubkey, system_instruction},
     std::{fs, path::Path},
 };
 
@@ -521,7 +521,7 @@ validate the number of CPIs using the `Check::inner_instruction_count` check:
 ```rust
 use {
     mollusk_svm::{Mollusk, result::Check},
-    solana_sdk::{
+    trezoa_sdk::{
         account::Account,
         instruction::{AccountMeta, Instruction},
         pubkey::Pubkey,

@@ -1,11 +1,11 @@
 use {
     mollusk_svm::{result::Check, Mollusk},
-    solana_instruction::Instruction,
-    solana_program_runtime::{
+    trezoa_instruction::Instruction,
+    trezoa_program_runtime::{
         invoke_context::InvokeContext,
-        solana_sbpf::{declare_builtin_function, memory_region::MemoryMapping},
+        trezoa_sbpf::{declare_builtin_function, memory_region::MemoryMapping},
     },
-    solana_pubkey::Pubkey,
+    trezoa_pubkey::Pubkey,
 };
 
 declare_builtin_function!(

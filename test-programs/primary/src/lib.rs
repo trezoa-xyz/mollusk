@@ -1,14 +1,14 @@
 use {
-    solana_account_info::{next_account_info, AccountInfo},
-    solana_cpi::invoke,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_program_error::{ProgramError, ProgramResult},
-    solana_pubkey::{Pubkey, PUBKEY_BYTES},
+    trezoa_account_info::{next_account_info, AccountInfo},
+    trezoa_cpi::invoke,
+    trezoa_instruction::{AccountMeta, Instruction},
+    trezoa_program_error::{ProgramError, ProgramResult},
+    trezoa_pubkey::{Pubkey, PUBKEY_BYTES},
 };
 
-solana_pubkey::declare_id!("239vxAL9Q7e3uLoinJpJ873r3bvT9sPFxH7yekwPppNF");
+trezoa_pubkey::declare_id!("239vxAL9Q7e3uLoinJpJ873r3bvT9sPFxH7yekwPppNF");
 
-solana_program_entrypoint::entrypoint!(process_instruction);
+trezoa_program_entrypoint::entrypoint!(process_instruction);
 
 fn process_instruction(
     _program_id: &Pubkey,
@@ -48,7 +48,7 @@ fn process_instruction(
             let lamports = u64::from_le_bytes(rest.try_into().unwrap());
 
             invoke(
-                &solana_system_interface::instruction::transfer(
+                &trezoa_system_interface::instruction::transfer(
                     payer_info.key,
                     recipient_info.key,
                     lamports,
@@ -67,14 +67,14 @@ fn process_instruction(
             }
 
             account_info.resize(0)?;
-            account_info.assign(&solana_sdk_ids::system_program::id());
+            account_info.assign(&trezoa_sdk_ids::system_program::id());
 
             let lamports = account_info.lamports();
 
             invoke(
-                &solana_system_interface::instruction::transfer(
+                &trezoa_system_interface::instruction::transfer(
                     account_info.key,
-                    &solana_sdk_ids::incinerator::id(),
+                    &trezoa_sdk_ids::incinerator::id(),
                     lamports,
                 ),
                 &[account_info.clone(), incinerator_info.clone()],

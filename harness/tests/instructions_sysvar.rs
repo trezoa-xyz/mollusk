@@ -1,11 +1,11 @@
 use {
     mollusk_svm::{result::Check, Mollusk},
-    solana_account::Account,
-    solana_instruction::{AccountMeta, BorrowedAccountMeta, BorrowedInstruction, Instruction},
-    solana_instructions_sysvar::construct_instructions_data,
-    solana_program_error::ProgramError,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
+    trezoa_account::Account,
+    trezoa_instruction::{AccountMeta, BorrowedAccountMeta, BorrowedInstruction, Instruction},
+    trezoa_instructions_sysvar::construct_instructions_data,
+    trezoa_program_error::ProgramError,
+    trezoa_pubkey::Pubkey,
+    trezoa_rent::Rent,
 };
 
 const ENTRY_SIZE: usize = 35; // program_id (32) + instruction_index (2) + executed (1)
@@ -84,7 +84,7 @@ fn test_single_instruction() {
                 is_signer: extra_is_signer2,
                 is_writable: extra_is_writable2,
             },
-            AccountMeta::new_readonly(solana_instructions_sysvar::ID, false),
+            AccountMeta::new_readonly(trezoa_instructions_sysvar::ID, false),
         ],
     );
 
@@ -111,7 +111,7 @@ fn test_single_instruction() {
 
     // Since no account was provided for the ix sysvar, it should not be returned.
     assert!(result
-        .get_account(&solana_instructions_sysvar::ID)
+        .get_account(&trezoa_instructions_sysvar::ID)
         .is_none());
 }
 
@@ -154,7 +154,7 @@ fn test_instruction_chain() {
             });
         }
         account_metas.push(AccountMeta::new_readonly(
-            solana_instructions_sysvar::ID,
+            trezoa_instructions_sysvar::ID,
             false,
         ));
 
@@ -213,7 +213,7 @@ fn test_instruction_chain() {
 
     // Since no account was provided for the ix sysvar, it should not be returned.
     assert!(result
-        .get_account(&solana_instructions_sysvar::ID)
+        .get_account(&trezoa_instructions_sysvar::ID)
         .is_none());
 }
 
@@ -231,7 +231,7 @@ fn test_override_sysvar_arbitrary() {
         &[],
         vec![
             AccountMeta::new(output_key, false),
-            AccountMeta::new_readonly(solana_instructions_sysvar::ID, false),
+            AccountMeta::new_readonly(trezoa_instructions_sysvar::ID, false),
         ],
     );
 
@@ -240,7 +240,7 @@ fn test_override_sysvar_arbitrary() {
         &[
             (output_key, Account::default()),
             (
-                solana_instructions_sysvar::ID,
+                trezoa_instructions_sysvar::ID,
                 Account::default(), // Use default here.
             ),
         ],
@@ -291,7 +291,7 @@ fn test_override_sysvar_actual() {
                 is_signer: extra_is_signer1,
                 is_writable: extra_is_writable1,
             },
-            AccountMeta::new_readonly(solana_instructions_sysvar::ID, false),
+            AccountMeta::new_readonly(trezoa_instructions_sysvar::ID, false),
         ],
     );
 
@@ -299,7 +299,7 @@ fn test_override_sysvar_actual() {
     let ix_sysvar_account_data =
         construct_instructions_data(&[as_borrowed_instruction(&instruction)]);
     let mut ix_sysvar_account =
-        Account::new(0, ix_sysvar_account_data.len(), &solana_sdk_ids::sysvar::ID);
+        Account::new(0, ix_sysvar_account_data.len(), &trezoa_sdk_ids::sysvar::ID);
     ix_sysvar_account.data = ix_sysvar_account_data.clone();
 
     // Now intentionally flip one of the is_writable flags in the instruction
@@ -314,7 +314,7 @@ fn test_override_sysvar_actual() {
                 Account::new(output_lamports, ENTRY_SIZE, &program_id),
             ),
             (extra_pubkey1, Account::default()),
-            (solana_instructions_sysvar::ID, ix_sysvar_account),
+            (trezoa_instructions_sysvar::ID, ix_sysvar_account),
         ],
         &[Check::success()],
     );
@@ -328,6 +328,6 @@ fn test_override_sysvar_actual() {
 
     // Since the account was provided for the ix sysvar, it should be returned.
     // It should also be unchanged.
-    let resulting_ix_sysvar_account = result.get_account(&solana_instructions_sysvar::ID).unwrap();
+    let resulting_ix_sysvar_account = result.get_account(&trezoa_instructions_sysvar::ID).unwrap();
     assert_eq!(resulting_ix_sysvar_account.data, ix_sysvar_account_data);
 }

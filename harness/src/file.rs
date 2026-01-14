@@ -1,6 +1,6 @@
 //! Module for loading files from local filesystem.
 //!
-//! When compiling a Solana program wih `cargo build-sbf`, the environment
+//! When compiling a Trezoa program wih `cargo build-sbf`, the environment
 //! variable `SBF_OUT_DIR` defaults to `target/deploy` and the compiled program
 //! ELF file is written to `target/deploy/program_name.so`.
 //!

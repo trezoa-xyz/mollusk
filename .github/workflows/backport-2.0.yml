@@ -1,4 +1,4 @@
-name: Backport to solana-v2.0
+name: Backport to trezoa-v2.0
 
 on:
   push:
@@ -20,5 +20,5 @@ jobs:
         uses: ./.github/actions/backport
         with:
           label: v2.0
-          base_branch: solana-v2.0
+          base_branch: trezoa-v2.0
           github_token: ${{ secrets.GITHUB_TOKEN }}

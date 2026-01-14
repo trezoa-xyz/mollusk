@@ -12,9 +12,9 @@ version = { workspace = true }
 [features]
 default = []
 all-builtins = [
-    "dep:solana-loader-v4-program",
-    "dep:solana-vote-program",
-    "dep:solana-zk-elgamal-proof-program",
+    "dep:trezoa-loader-v4-program",
+    "dep:trezoa-vote-program",
+    "dep:trezoa-zk-elgamal-proof-program",
 ]
 fuzz = [
     "dep:mollusk-svm-fuzz-fixture",
@@ -27,10 +27,10 @@ fuzz-fd = [
 ]
 inner-instructions = [
     "mollusk-svm-result/inner-instructions",
-    "dep:solana-transaction-status-client-types",
+    "dep:trezoa-transaction-status-client-types",
 ]
 invocation-inspect-callback = []
-precompiles = ["dep:agave-precompiles"]
+precompiles = ["dep:trezoa-precompiles"]
 register-tracing = [
     "invocation-inspect-callback",
     "dep:hex",
@@ -42,9 +42,9 @@ serde = [
 ]
 
 [dependencies]
-agave-feature-set = { workspace = true, features = ["agave-unstable-api"] }
-agave-precompiles = { workspace = true, features = ["agave-unstable-api"], optional = true }
-agave-syscalls = { workspace = true }
+trezoa-feature-set = { workspace = true, features = ["trezoa-unstable-api"] }
+trezoa-precompiles = { workspace = true, features = ["trezoa-unstable-api"], optional = true }
+trezoa-syscalls = { workspace = true }
 bincode = { workspace = true }
 hex = { workspace = true, optional = true }
 serde = { workspace = true, features = ["derive"], optional = true }
@@ -54,41 +54,41 @@ mollusk-svm-fuzz-fixture-firedancer = { workspace = true, optional = true }
 mollusk-svm-fuzz-fs = { workspace = true, optional = true }
 mollusk-svm-result = { workspace = true }
 sha2 = { workspace = true, optional = true }
-solana-account = { workspace = true }
-solana-bpf-loader-program = { workspace = true, features = ["agave-unstable-api"] }
-solana-clock = { workspace = true }
-solana-compute-budget = { workspace = true, features = ["agave-unstable-api"] }
-solana-epoch-rewards = { workspace = true }
-solana-epoch-schedule = { workspace = true }
-solana-hash = { workspace = true }
-solana-instruction = { workspace = true }
-solana-instruction-error = { workspace = true, features = ["serde"] }
-solana-instructions-sysvar = { workspace = true }
-solana-loader-v3-interface = { workspace = true, features = ["serde"] }
-solana-loader-v4-interface = { workspace = true }
-solana-loader-v4-program = { workspace = true, features = ["agave-unstable-api"], optional = true }
-solana-logger = { workspace = true }
-solana-message = { workspace = true }
-solana-precompile-error = { workspace = true }
-solana-program-error = { workspace = true }
-solana-program-runtime = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-rent = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-slot-hashes = { workspace = true }
-solana-stake-interface = { workspace = true }
-solana-svm-callback = { workspace = true }
-solana-svm-log-collector = { workspace = true }
-solana-svm-timings = { workspace = true }
-solana-svm-transaction = { workspace = true }
-solana-system-program = { workspace = true, features = ["agave-unstable-api"] }
-solana-sysvar = { workspace = true }
-solana-sysvar-id = { workspace = true }
-solana-transaction-context = { workspace = true, features = ["dev-context-only-utils"] }
-solana-transaction-error = { workspace = true }
-solana-transaction-status-client-types = { workspace = true, features = ["agave-unstable-api"], optional = true }
-solana-vote-program = { workspace = true, features = ["agave-unstable-api"], optional = true }
-solana-zk-elgamal-proof-program = { workspace = true, features = ["agave-unstable-api"], optional = true }
+trezoa-account = { workspace = true }
+trezoa-bpf-loader-program = { workspace = true, features = ["trezoa-unstable-api"] }
+trezoa-clock = { workspace = true }
+trezoa-compute-budget = { workspace = true, features = ["trezoa-unstable-api"] }
+trezoa-epoch-rewards = { workspace = true }
+trezoa-epoch-schedule = { workspace = true }
+trezoa-hash = { workspace = true }
+trezoa-instruction = { workspace = true }
+trezoa-instruction-error = { workspace = true, features = ["serde"] }
+trezoa-instructions-sysvar = { workspace = true }
+trezoa-loader-v3-interface = { workspace = true, features = ["serde"] }
+trezoa-loader-v4-interface = { workspace = true }
+trezoa-loader-v4-program = { workspace = true, features = ["trezoa-unstable-api"], optional = true }
+trezoa-logger = { workspace = true }
+trezoa-message = { workspace = true }
+trezoa-precompile-error = { workspace = true }
+trezoa-program-error = { workspace = true }
+trezoa-program-runtime = { workspace = true }
+trezoa-pubkey = { workspace = true }
+trezoa-rent = { workspace = true }
+trezoa-sdk-ids = { workspace = true }
+trezoa-slot-hashes = { workspace = true }
+trezoa-stake-interface = { workspace = true }
+trezoa-svm-callback = { workspace = true }
+trezoa-svm-log-collector = { workspace = true }
+trezoa-svm-timings = { workspace = true }
+trezoa-svm-transaction = { workspace = true }
+trezoa-system-program = { workspace = true, features = ["trezoa-unstable-api"] }
+trezoa-sysvar = { workspace = true }
+trezoa-sysvar-id = { workspace = true }
+trezoa-transaction-context = { workspace = true, features = ["dev-context-only-utils"] }
+trezoa-transaction-error = { workspace = true }
+trezoa-transaction-status-client-types = { workspace = true, features = ["trezoa-unstable-api"], optional = true }
+trezoa-vote-program = { workspace = true, features = ["trezoa-unstable-api"], optional = true }
+trezoa-zk-elgamal-proof-program = { workspace = true, features = ["trezoa-unstable-api"], optional = true }
 
 [dev-dependencies]
 criterion = { workspace = true }
@@ -98,11 +98,11 @@ openssl = { workspace = true }
 rand0-7 = { workspace = true }
 rayon = { workspace = true }
 serial_test = { workspace = true }
-solana-ed25519-program = { workspace = true }
-solana-native-token = { workspace = true }
-solana-secp256k1-program = { workspace = true, features = ["bincode"] }
-solana-secp256r1-program = { workspace = true }
-solana-system-interface = { workspace = true }
+trezoa-ed25519-program = { workspace = true }
+trezoa-native-token = { workspace = true }
+trezoa-secp256k1-program = { workspace = true, features = ["bincode"] }
+trezoa-secp256r1-program = { workspace = true }
+trezoa-system-interface = { workspace = true }
 
 [[bench]]
 name = "ips"

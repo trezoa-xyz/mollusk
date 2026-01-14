@@ -1,7 +1,7 @@
 #![cfg(feature = "fuzz-fd")]
 
 use {
-    agave_feature_set::FeatureSet,
+    trezoa_feature_set::FeatureSet,
     mollusk_svm::{
         fuzz::firedancer::{
             build_fixture_from_mollusk_test, load_firedancer_fixture, ParsedFixtureContext,
@@ -10,9 +10,9 @@ use {
     },
     mollusk_svm_fuzz_fixture_firedancer::{account::SeedAddress, Fixture},
     rayon::prelude::*,
-    solana_account::Account,
-    solana_pubkey::Pubkey,
-    solana_transaction_context::InstructionAccount,
+    trezoa_account::Account,
+    trezoa_pubkey::Pubkey,
+    trezoa_transaction_context::InstructionAccount,
     std::{assert_eq, fs, path::Path, process::Command},
 };
 

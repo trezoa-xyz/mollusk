@@ -1,8 +1,8 @@
 use {
-    solana_account::Account,
-    solana_instruction::{BorrowedAccountMeta, BorrowedInstruction, Instruction},
-    solana_instructions_sysvar::construct_instructions_data,
-    solana_pubkey::Pubkey,
+    trezoa_account::Account,
+    trezoa_instruction::{BorrowedAccountMeta, BorrowedInstruction, Instruction},
+    trezoa_instructions_sysvar::construct_instructions_data,
+    trezoa_pubkey::Pubkey,
 };
 
 pub fn keyed_account<'a>(instructions: impl Iterator<Item = &'a Instruction>) -> (Pubkey, Account) {
@@ -26,11 +26,11 @@ pub fn keyed_account<'a>(instructions: impl Iterator<Item = &'a Instruction>) ->
     );
 
     (
-        solana_instructions_sysvar::ID,
+        trezoa_instructions_sysvar::ID,
         Account {
             lamports: 0,
             data,
-            owner: solana_sysvar_id::ID,
+            owner: trezoa_sysvar_id::ID,
             executable: false,
             rent_epoch: Default::default(),
         },

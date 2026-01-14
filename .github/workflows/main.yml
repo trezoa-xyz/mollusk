@@ -2,9 +2,9 @@ name: Main
 
 on:
   push:
-    branches: [main, agave-2.2.0, agave-2.3.0]
+    branches: [main, trezoa-2.2.0, trezoa-2.3.0]
   pull_request:
-    branches: [main, agave-2.2.0, agave-2.3.0]
+    branches: [main, trezoa-2.2.0, trezoa-2.3.0]
 
 env: {}
 
@@ -80,13 +80,13 @@ jobs:
           key: cargo-build-sbf-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
             cargo-build-sbf-
-      - name: Get Solana version
-        id: solana
-        run: echo "version=$(make solana-version)" >> $GITHUB_OUTPUT
-      - uses: metaplex-foundation/actions/install-solana@v1
+      - name: Get Trezoa version
+        id: trezoa
+        run: echo "version=$(make trezoa-version)" >> $GITHUB_OUTPUT
+      - uses: metaplex-foundation/actions/install-trezoa@v1
         with:
           cache: true
-          version: ${{ steps.solana.outputs.version }}
+          version: ${{ steps.trezoa.outputs.version }}
       - name: Build test programs
         run: make build-test-programs
       - name: Test

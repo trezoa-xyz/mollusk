@@ -10,5 +10,5 @@ edition = { workspace = true }
 version = { workspace = true }
 
 [dependencies]
-solana-pubkey = { workspace = true }
+trezoa-pubkey = { workspace = true }
 thiserror = { workspace = true }

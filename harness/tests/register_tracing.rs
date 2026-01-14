@@ -3,11 +3,11 @@
 fn test_custom_register_tracing_callback() {
     use {
         mollusk_svm::{InvocationInspectCallback, Mollusk},
-        solana_account::Account,
-        solana_instruction::{AccountMeta, Instruction},
-        solana_program_runtime::invoke_context::{Executable, InvokeContext, RegisterTrace},
-        solana_pubkey::Pubkey,
-        solana_transaction_context::{InstructionAccount, InstructionContext},
+        trezoa_account::Account,
+        trezoa_instruction::{AccountMeta, Instruction},
+        trezoa_program_runtime::invoke_context::{Executable, InvokeContext, RegisterTrace},
+        trezoa_pubkey::Pubkey,
+        trezoa_transaction_context::{InstructionAccount, InstructionContext},
         std::{cell::RefCell, collections::HashMap, rc::Rc},
     };
 
@@ -36,15 +36,15 @@ fn test_custom_register_tracing_callback() {
                 .map(|registers| {
                     (
                         registers,
-                        solana_program_runtime::solana_sbpf::ebpf::get_insn_unchecked(
+                        trezoa_program_runtime::trezoa_sbpf::ebpf::get_insn_unchecked(
                             program,
                             registers[11] as usize,
                         ),
                     )
                 })
                 .filter(|(_registers, insn)| {
-                    insn.opc & 7 == solana_program_runtime::solana_sbpf::ebpf::BPF_JMP
-                        && insn.opc != solana_program_runtime::solana_sbpf::ebpf::BPF_JA
+                    insn.opc & 7 == trezoa_program_runtime::trezoa_sbpf::ebpf::BPF_JMP
+                        && insn.opc != trezoa_program_runtime::trezoa_sbpf::ebpf::BPF_JA
                 })
                 .count();
             let entry = tracing_data.entry(*program_id).or_insert(TracingData {

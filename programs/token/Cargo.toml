@@ -17,9 +17,9 @@ token-2022 = []
 
 [dependencies]
 mollusk-svm = { workspace = true }
-solana-account = { workspace = true }
-solana-program-pack = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-rent = { workspace = true }
-spl-token-interface = { workspace = true }
+trezoa-account = { workspace = true }
+trezoa-program-pack = { workspace = true }
+trezoa-pubkey = { workspace = true }
+trezoa-rent = { workspace = true }
+tpl-token-interface = { workspace = true }
 spl-associated-token-account-interface = { workspace = true, optional = true  }

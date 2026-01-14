@@ -6,18 +6,18 @@
 
 use {
     crate::{sysvar::Sysvars, Mollusk},
-    agave_feature_set::FeatureSet,
+    trezoa_feature_set::FeatureSet,
     mollusk_svm_fuzz_fixture::{
         context::Context as FuzzContext, effects::Effects as FuzzEffects,
         sysvars::Sysvars as FuzzSysvars, Fixture as FuzzFixture,
     },
     mollusk_svm_result::InstructionResult,
-    solana_account::Account,
-    solana_compute_budget::compute_budget::ComputeBudget,
-    solana_instruction::Instruction,
-    solana_pubkey::Pubkey,
-    solana_slot_hashes::SlotHashes,
-    solana_sysvar::last_restart_slot::LastRestartSlot,
+    trezoa_account::Account,
+    trezoa_compute_budget::compute_budget::ComputeBudget,
+    trezoa_instruction::Instruction,
+    trezoa_pubkey::Pubkey,
+    trezoa_slot_hashes::SlotHashes,
+    trezoa_sysvar::last_restart_slot::LastRestartSlot,
 };
 
 impl From<&Sysvars> for FuzzSysvars {

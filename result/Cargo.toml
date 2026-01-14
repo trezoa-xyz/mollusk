@@ -12,17 +12,17 @@ version = { workspace = true }
 [dependencies]
 mollusk-svm-fuzz-fixture = { workspace = true, optional = true }
 serde = { version = "1.0", features = ["derive"], optional = true }
-solana-account = { workspace = true }
-solana-instruction = { workspace = true }
-solana-message = { workspace = true, optional = true }
-solana-program-error = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-rent = { workspace = true }
-solana-transaction-error = { workspace = true }
-solana-transaction-status-client-types = { workspace = true, optional = true }
+trezoa-account = { workspace = true }
+trezoa-instruction = { workspace = true }
+trezoa-message = { workspace = true, optional = true }
+trezoa-program-error = { workspace = true }
+trezoa-pubkey = { workspace = true }
+trezoa-rent = { workspace = true }
+trezoa-transaction-error = { workspace = true }
+trezoa-transaction-status-client-types = { workspace = true, optional = true }
 
 [features]
 default = []
 fuzz = ["dep:mollusk-svm-fuzz-fixture"]
-inner-instructions = ["dep:solana-message", "dep:solana-transaction-status-client-types"]
-serde = ["dep:serde", "solana-pubkey/serde"]
+inner-instructions = ["dep:trezoa-message", "dep:trezoa-transaction-status-client-types"]
+serde = ["dep:serde", "trezoa-pubkey/serde"]

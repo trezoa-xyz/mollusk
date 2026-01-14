@@ -16,7 +16,7 @@ pub mod feature_set;
 pub mod instr_account;
 pub mod metadata;
 pub mod proto {
-    include!(concat!(env!("OUT_DIR"), "/org.solana.sealevel.v1.rs"));
+    include!(concat!(env!("OUT_DIR"), "/org.trezoa.sealevel.v1.rs"));
 }
 
 use {
@@ -24,7 +24,7 @@ use {
         context::Context, effects::Effects, metadata::Metadata, proto::InstrFixture as ProtoFixture,
     },
     mollusk_svm_fuzz_fs::{FsHandler, IntoSerializableFixture, SerializableFixture},
-    solana_keccak_hasher::{Hash, Hasher},
+    trezoa_keccak_hasher::{Hash, Hasher},
 };
 
 /// A fixture for invoking a single instruction against a simulated SVM
@@ -111,12 +111,12 @@ mod tests {
             effects::Effects,
             metadata::Metadata,
         },
-        agave_feature_set::FeatureSet,
+        trezoa_feature_set::FeatureSet,
         mollusk_svm_fuzz_fs::SerializableFixture,
-        solana_account::Account,
-        solana_keccak_hasher::Hash,
-        solana_pubkey::Pubkey,
-        solana_transaction_context::InstructionAccount,
+        trezoa_account::Account,
+        trezoa_keccak_hasher::Hash,
+        trezoa_pubkey::Pubkey,
+        trezoa_transaction_context::InstructionAccount,
     };
 
     fn produce_hash(fixture: &Fixture) -> Hash {

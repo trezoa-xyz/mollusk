@@ -18,7 +18,7 @@ pub mod sysvars;
 use {
     crate::{context::Context, effects::Effects, proto::InstrFixture as ProtoFixture},
     mollusk_svm_fuzz_fs::{FsHandler, IntoSerializableFixture, SerializableFixture},
-    solana_keccak_hasher::{Hash, Hasher},
+    trezoa_keccak_hasher::{Hash, Hasher},
 };
 
 /// A fixture for invoking a single instruction against a simulated SVM
@@ -94,13 +94,13 @@ mod tests {
     use {
         super::{proto::InstrFixture, Fixture},
         crate::{context::Context, effects::Effects, sysvars::Sysvars},
-        agave_feature_set::FeatureSet,
+        trezoa_feature_set::FeatureSet,
         mollusk_svm_fuzz_fs::SerializableFixture,
-        solana_account::Account,
-        solana_compute_budget::compute_budget::ComputeBudget,
-        solana_instruction::AccountMeta,
-        solana_keccak_hasher::Hash,
-        solana_pubkey::Pubkey,
+        trezoa_account::Account,
+        trezoa_compute_budget::compute_budget::ComputeBudget,
+        trezoa_instruction::AccountMeta,
+        trezoa_keccak_hasher::Hash,
+        trezoa_pubkey::Pubkey,
     };
 
     fn produce_hash(fixture: &Fixture) -> Hash {

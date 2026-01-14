@@ -1,12 +1,12 @@
 use {
     mollusk_svm::{program::keyed_account_for_system_program, result::Check, Mollusk},
-    solana_account::Account,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_pubkey::Pubkey,
+    trezoa_account::Account,
+    trezoa_instruction::{AccountMeta, Instruction},
+    trezoa_pubkey::Pubkey,
 };
 
 fn system_account_with_lamports(lamports: u64) -> Account {
-    Account::new(lamports, 0, &solana_sdk_ids::system_program::id())
+    Account::new(lamports, 0, &trezoa_sdk_ids::system_program::id())
 }
 
 #[test]
@@ -28,7 +28,7 @@ fn test_transfers() {
         &[
             (
                 // 0: Alice to Bob
-                &solana_system_interface::instruction::transfer(&alice, &bob, alice_to_bob),
+                &trezoa_system_interface::instruction::transfer(&alice, &bob, alice_to_bob),
                 &[
                     Check::success(),
                     Check::account(&alice)
@@ -47,7 +47,7 @@ fn test_transfers() {
             ),
             (
                 // 1: Bob to Carol
-                &solana_system_interface::instruction::transfer(&bob, &carol, bob_to_carol),
+                &trezoa_system_interface::instruction::transfer(&bob, &carol, bob_to_carol),
                 &[
                     Check::success(),
                     Check::account(&alice)
@@ -66,7 +66,7 @@ fn test_transfers() {
             ),
             (
                 // 2: Bob to Dave
-                &solana_system_interface::instruction::transfer(&bob, &dave, bob_to_dave),
+                &trezoa_system_interface::instruction::transfer(&bob, &dave, bob_to_dave),
                 &[
                     Check::success(),
                     Check::account(&alice)
@@ -117,13 +117,13 @@ fn test_mixed() {
     let lamports = mollusk.sysvars.rent.minimum_balance(space);
 
     let ix_transfer_to_1 =
-        solana_system_interface::instruction::transfer(&payer, &target1, lamports);
+        trezoa_system_interface::instruction::transfer(&payer, &target1, lamports);
     let ix_transfer_to_2 =
-        solana_system_interface::instruction::transfer(&payer, &target2, lamports);
-    let ix_allocate_1 = solana_system_interface::instruction::allocate(&target1, space as u64);
-    let ix_allocate_2 = solana_system_interface::instruction::allocate(&target2, space as u64);
-    let ix_assign_1 = solana_system_interface::instruction::assign(&target1, &program_id);
-    let ix_assign_2 = solana_system_interface::instruction::assign(&target2, &program_id);
+        trezoa_system_interface::instruction::transfer(&payer, &target2, lamports);
+    let ix_allocate_1 = trezoa_system_interface::instruction::allocate(&target1, space as u64);
+    let ix_allocate_2 = trezoa_system_interface::instruction::allocate(&target2, space as u64);
+    let ix_assign_1 = trezoa_system_interface::instruction::assign(&target1, &program_id);
+    let ix_assign_2 = trezoa_system_interface::instruction::assign(&target2, &program_id);
     let ix_write_data_to_1 = {
         let mut instruction_data = vec![1];
         instruction_data.extend_from_slice(data);
@@ -147,8 +147,8 @@ fn test_mixed() {
         &[3],
         vec![
             AccountMeta::new(target1, true),
-            AccountMeta::new(solana_sdk_ids::incinerator::id(), false),
-            AccountMeta::new_readonly(solana_sdk_ids::system_program::id(), false),
+            AccountMeta::new(trezoa_sdk_ids::incinerator::id(), false),
+            AccountMeta::new_readonly(trezoa_sdk_ids::system_program::id(), false),
         ],
     );
 
@@ -180,7 +180,7 @@ fn test_mixed() {
             (payer, system_account_with_lamports(lamports * 4)),
             (target1, Account::default()),
             (target2, Account::default()),
-            (solana_sdk_ids::incinerator::id(), Account::default()),
+            (trezoa_sdk_ids::incinerator::id(), Account::default()),
             keyed_account_for_system_program(),
         ],
     );

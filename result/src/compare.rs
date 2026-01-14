@@ -5,8 +5,8 @@ use {
         config::{compare, Config},
         types::InstructionResult,
     },
-    solana_account::ReadableAccount,
-    solana_pubkey::Pubkey,
+    trezoa_account::ReadableAccount,
+    trezoa_pubkey::Pubkey,
 };
 
 /// Checks to run between two `InstructionResult` instances.

@@ -1,16 +1,16 @@
 //! Check system for validating individual instruction results.
 
 #[cfg(feature = "inner-instructions")]
-use solana_transaction_status_client_types::InnerInstruction;
+use trezoa_transaction_status_client_types::InnerInstruction;
 use {
     crate::{
         config::{compare, throw, CheckContext, Config},
         types::{InstructionResult, ProgramResult, TransactionProgramResult, TransactionResult},
     },
-    solana_account::{Account, ReadableAccount},
-    solana_instruction::error::InstructionError,
-    solana_program_error::ProgramError,
-    solana_pubkey::Pubkey,
+    trezoa_account::{Account, ReadableAccount},
+    trezoa_instruction::error::InstructionError,
+    trezoa_program_error::ProgramError,
+    trezoa_pubkey::Pubkey,
 };
 
 enum CheckType<'a> {

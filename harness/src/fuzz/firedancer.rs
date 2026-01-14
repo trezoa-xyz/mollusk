@@ -6,7 +6,7 @@
 
 use {
     crate::{compile_accounts::compile_accounts, Mollusk, DEFAULT_LOADER_KEY},
-    agave_feature_set::FeatureSet,
+    trezoa_feature_set::FeatureSet,
     mollusk_svm_fuzz_fixture_firedancer::{
         context::{
             Context as FuzzContext, EpochContext as FuzzEpochContext,
@@ -17,27 +17,27 @@ use {
         Fixture as FuzzFixture,
     },
     mollusk_svm_result::InstructionResult,
-    solana_account::Account,
-    solana_compute_budget::compute_budget::ComputeBudget,
-    solana_instruction::{error::InstructionError, AccountMeta, Instruction},
-    solana_pubkey::Pubkey,
-    solana_transaction_context::InstructionAccount,
+    trezoa_account::Account,
+    trezoa_compute_budget::compute_budget::ComputeBudget,
+    trezoa_instruction::{error::InstructionError, AccountMeta, Instruction},
+    trezoa_pubkey::Pubkey,
+    trezoa_transaction_context::InstructionAccount,
     std::collections::HashMap,
 };
 
 static BUILTIN_PROGRAM_IDS: &[Pubkey] = &[
-    solana_sdk_ids::system_program::id(),
-    solana_sdk_ids::vote::id(),
-    solana_sdk_ids::stake::id(),
-    solana_sdk_ids::config::id(),
-    solana_sdk_ids::bpf_loader_deprecated::id(),
-    solana_sdk_ids::bpf_loader::id(),
-    solana_sdk_ids::bpf_loader_upgradeable::id(),
-    solana_sdk_ids::compute_budget::id(),
-    solana_sdk_ids::address_lookup_table::id(),
-    solana_sdk_ids::zk_token_proof_program::id(),
-    solana_sdk_ids::loader_v4::id(),
-    solana_sdk_ids::zk_elgamal_proof_program::id(),
+    trezoa_sdk_ids::system_program::id(),
+    trezoa_sdk_ids::vote::id(),
+    trezoa_sdk_ids::stake::id(),
+    trezoa_sdk_ids::config::id(),
+    trezoa_sdk_ids::bpf_loader_deprecated::id(),
+    trezoa_sdk_ids::bpf_loader::id(),
+    trezoa_sdk_ids::bpf_loader_upgradeable::id(),
+    trezoa_sdk_ids::compute_budget::id(),
+    trezoa_sdk_ids::address_lookup_table::id(),
+    trezoa_sdk_ids::zk_token_proof_program::id(),
+    trezoa_sdk_ids::loader_v4::id(),
+    trezoa_sdk_ids::zk_elgamal_proof_program::id(),
 ];
 
 fn instr_err_to_num(error: &InstructionError) -> i32 {
@@ -63,7 +63,7 @@ fn build_fixture_context(
     slot: u64,
 ) -> FuzzContext {
     let loader_key = if BUILTIN_PROGRAM_IDS.contains(&instruction.program_id) {
-        solana_sdk_ids::native_loader::id()
+        trezoa_sdk_ids::native_loader::id()
     } else {
         DEFAULT_LOADER_KEY
     };

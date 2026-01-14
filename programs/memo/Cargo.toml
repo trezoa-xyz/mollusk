@@ -16,5 +16,5 @@ memo-v1 = []
 
 [dependencies]
 mollusk-svm = { workspace = true }
-solana-account = { workspace = true }
-solana-pubkey = { workspace = true }
+trezoa-account = { workspace = true }
+trezoa-pubkey = { workspace = true }

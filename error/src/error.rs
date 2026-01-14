@@ -2,7 +2,7 @@
 //! misconfiguration of test inputs or the test environment.
 
 use {
-    solana_pubkey::Pubkey,
+    trezoa_pubkey::Pubkey,
     std::{fmt::Display, path::Path},
     thiserror::Error,
 };

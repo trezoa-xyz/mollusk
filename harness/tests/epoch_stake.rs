@@ -1,8 +1,8 @@
 use {
     mollusk_svm::{result::Check, Mollusk},
-    solana_account::Account,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_pubkey::Pubkey,
+    trezoa_account::Account,
+    trezoa_instruction::{AccountMeta, Instruction},
+    trezoa_pubkey::Pubkey,
 };
 
 #[test]

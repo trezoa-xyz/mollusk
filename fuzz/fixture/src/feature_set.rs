@@ -1,14 +1,14 @@
 //! Runtime feature set.
 
 use {
-    super::proto::FeatureSet as ProtoFeatureSet, agave_feature_set::FeatureSet,
-    solana_keccak_hasher::Hasher, solana_pubkey::Pubkey,
+    super::proto::FeatureSet as ProtoFeatureSet, trezoa_feature_set::FeatureSet,
+    trezoa_keccak_hasher::Hasher, trezoa_pubkey::Pubkey,
 };
 
 // Omit "test features" (they have the same u64 ID).
 pub static OMITTED_FEATURES: &[Pubkey] = &[
-    agave_feature_set::disable_sbpf_v0_execution::id(),
-    agave_feature_set::reenable_sbpf_v0_execution::id(),
+    trezoa_feature_set::disable_sbpf_v0_execution::id(),
+    trezoa_feature_set::reenable_sbpf_v0_execution::id(),
 ];
 
 impl From<ProtoFeatureSet> for FeatureSet {

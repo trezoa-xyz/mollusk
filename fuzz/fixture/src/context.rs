@@ -5,12 +5,12 @@ use {
         proto::{InstrAcct as ProtoInstructionAccount, InstrContext as ProtoContext},
         sysvars::Sysvars,
     },
-    agave_feature_set::FeatureSet,
-    solana_account::Account,
-    solana_compute_budget::compute_budget::ComputeBudget,
-    solana_instruction::AccountMeta,
-    solana_keccak_hasher::Hasher,
-    solana_pubkey::Pubkey,
+    trezoa_feature_set::FeatureSet,
+    trezoa_account::Account,
+    trezoa_compute_budget::compute_budget::ComputeBudget,
+    trezoa_instruction::AccountMeta,
+    trezoa_keccak_hasher::Hasher,
+    trezoa_pubkey::Pubkey,
 };
 
 /// Instruction context fixture.
@@ -65,9 +65,9 @@ impl From<ProtoContext> for Context {
 
         let feature_set: FeatureSet = value.feature_set.map(Into::into).unwrap_or_default();
         let simd_0268_active =
-            feature_set.is_active(&agave_feature_set::raise_cpi_nesting_limit_to_8::id());
+            feature_set.is_active(&trezoa_feature_set::raise_cpi_nesting_limit_to_8::id());
         let simd_0339_active =
-            feature_set.is_active(&agave_feature_set::increase_cpi_account_info_limit::id());
+            feature_set.is_active(&trezoa_feature_set::increase_cpi_account_info_limit::id());
 
         let compute_budget = value.compute_budget.map(Into::into).unwrap_or_else(|| {
             ComputeBudget::new_with_defaults(simd_0268_active, simd_0339_active)
@@ -152,7 +152,7 @@ mod tests {
             ComputeBudget as ProtoComputeBudget, FeatureSet as ProtoFeatureSet,
             InstrContext as ProtoContext,
         },
-        solana_pubkey::Pubkey,
+        trezoa_pubkey::Pubkey,
     };
 
     fn proto_feature_set_with(features: &[Pubkey]) -> ProtoFeatureSet {
@@ -180,8 +180,8 @@ mod tests {
     fn test_defaults_use_feature_flag_when_active() {
         let mut proto = empty_proto_context();
         proto.feature_set = Some(proto_feature_set_with(&[
-            agave_feature_set::raise_cpi_nesting_limit_to_8::id(),
-            agave_feature_set::increase_cpi_account_info_limit::id(),
+            trezoa_feature_set::raise_cpi_nesting_limit_to_8::id(),
+            trezoa_feature_set::increase_cpi_account_info_limit::id(),
         ]));
 
         let ctx: Context = proto.into();
@@ -208,8 +208,8 @@ mod tests {
 
         // Whether the feature is present or not should not affect passthrough
         proto.feature_set = Some(proto_feature_set_with(&[
-            agave_feature_set::raise_cpi_nesting_limit_to_8::id(),
-            agave_feature_set::increase_cpi_account_info_limit::id(),
+            trezoa_feature_set::raise_cpi_nesting_limit_to_8::id(),
+            trezoa_feature_set::increase_cpi_account_info_limit::id(),
         ]));
 
         let ctx: Context = proto.into();

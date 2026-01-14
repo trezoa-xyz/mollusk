@@ -1,12 +1,12 @@
 use {
     mollusk_svm::{program::keyed_account_for_system_program, result::Check, Mollusk},
-    solana_account::Account,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_pubkey::Pubkey,
+    trezoa_account::Account,
+    trezoa_instruction::{AccountMeta, Instruction},
+    trezoa_pubkey::Pubkey,
 };
 
 fn system_account_with_lamports(lamports: u64) -> Account {
-    Account::new(lamports, 0, &solana_sdk_ids::system_program::id())
+    Account::new(lamports, 0, &trezoa_sdk_ids::system_program::id())
 }
 
 #[test]
@@ -21,8 +21,8 @@ fn test_transfers_with_persisted_state() {
     let transfer_amount = 50_000_000u64;
 
     let instructions = vec![
-        solana_system_interface::instruction::transfer(&sender, &intermediary, transfer_amount),
-        solana_system_interface::instruction::transfer(&intermediary, &recipient, transfer_amount),
+        trezoa_system_interface::instruction::transfer(&sender, &intermediary, transfer_amount),
+        trezoa_system_interface::instruction::transfer(&intermediary, &recipient, transfer_amount),
     ];
 
     mollusk.process_and_validate_transaction_instructions(
@@ -56,9 +56,9 @@ fn test_multi_program_transaction() {
     let space = data.len();
     let lamports = mollusk.sysvars.rent.minimum_balance(space);
 
-    let ix_transfer = solana_system_interface::instruction::transfer(&payer, &target, lamports);
-    let ix_allocate = solana_system_interface::instruction::allocate(&target, space as u64);
-    let ix_assign = solana_system_interface::instruction::assign(&target, &program_id);
+    let ix_transfer = trezoa_system_interface::instruction::transfer(&payer, &target, lamports);
+    let ix_allocate = trezoa_system_interface::instruction::allocate(&target, space as u64);
+    let ix_assign = trezoa_system_interface::instruction::assign(&target, &program_id);
 
     let ix_write_data = {
         let mut instruction_data = vec![1];
@@ -99,7 +99,7 @@ fn test_compute_units_tracked() {
     let recipient = Pubkey::new_unique();
 
     let result = mollusk.process_transaction_instructions(
-        &[solana_system_interface::instruction::transfer(
+        &[trezoa_system_interface::instruction::transfer(
             &sender, &recipient, 100,
         )],
         &[
@@ -122,8 +122,8 @@ fn test_compute_units_accumulate_across_instructions() {
 
     let result = mollusk.process_transaction_instructions(
         &[
-            solana_system_interface::instruction::transfer(&alice, &bob, 1000),
-            solana_system_interface::instruction::transfer(&bob, &carol, 500),
+            trezoa_system_interface::instruction::transfer(&alice, &bob, 1000),
+            trezoa_system_interface::instruction::transfer(&bob, &carol, 500),
         ],
         &[
             (alice, system_account_with_lamports(10_000)),
@@ -151,9 +151,9 @@ fn test_failure_stops_instruction_chain() {
 
     let result = mollusk.process_transaction_instructions(
         &[
-            solana_system_interface::instruction::transfer(&alice, &bob, 100),
-            solana_system_interface::instruction::transfer(&bob, &carol, 999_999),
-            solana_system_interface::instruction::transfer(&alice, &carol, 50),
+            trezoa_system_interface::instruction::transfer(&alice, &bob, 100),
+            trezoa_system_interface::instruction::transfer(&bob, &carol, 999_999),
+            trezoa_system_interface::instruction::transfer(&alice, &carol, 50),
         ],
         &[
             (alice, system_account_with_lamports(initial_balance)),
@@ -179,7 +179,7 @@ fn test_missing_signer_fails() {
     let sender = Pubkey::new_unique();
     let recipient = Pubkey::new_unique();
 
-    let mut ix = solana_system_interface::instruction::transfer(&sender, &recipient, 100);
+    let mut ix = trezoa_system_interface::instruction::transfer(&sender, &recipient, 100);
     ix.accounts[0].is_signer = false;
 
     let result = mollusk.process_transaction_instructions(
@@ -206,7 +206,7 @@ fn test_many_instructions_in_transaction() {
     let instructions: Vec<Instruction> = recipients
         .iter()
         .map(|recipient| {
-            solana_system_interface::instruction::transfer(&sender, recipient, transfer_amount)
+            trezoa_system_interface::instruction::transfer(&sender, recipient, transfer_amount)
         })
         .collect();
 

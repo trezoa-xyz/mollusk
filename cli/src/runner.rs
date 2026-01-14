@@ -7,7 +7,7 @@ use {
         result::{Compare, Config, InstructionResult},
         Mollusk,
     },
-    mollusk_svm_bencher::{get_solana_version, result::MolluskComputeUnitBenchResult},
+    mollusk_svm_bencher::{get_trezoa_version, result::MolluskComputeUnitBenchResult},
     std::path::PathBuf,
 };
 
@@ -97,7 +97,7 @@ impl Runner {
     ) -> Result<RunResult<'a>, Box<dyn std::error::Error>> {
         // Disable stdout logging of program logs if not specified.
         if !self.program_logs {
-            solana_logger::setup_with("");
+            trezoa_logger::setup_with("");
         }
 
         let mut pass = true;
@@ -266,11 +266,11 @@ impl Runner {
         }
 
         if let Some(cus_report) = &self.cus_report {
-            let solana_version = get_solana_version();
+            let trezoa_version = get_trezoa_version();
             mollusk_svm_bencher::result::write_results(
                 &PathBuf::from(&cus_report.path),
                 &cus_report.table_header,
-                &solana_version,
+                &trezoa_version,
                 bench_results,
             );
         }

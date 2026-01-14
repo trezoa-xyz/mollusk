@@ -1,5 +1,5 @@
 //! The Mollusk Compute Unit Bencher can be used to benchmark the compute unit
-//! usage of Solana programs. It provides a simple API for developers to write
+//! usage of Trezoa programs. It provides a simple API for developers to write
 //! benchmarks for their programs, which can be checked while making changes to
 //! the program.
 //!
@@ -16,7 +16,7 @@
 //! };
 //!
 //! // Optionally disable logging.
-//! solana_logger::setup_with("");
+//! trezoa_logger::setup_with("");
 //!
 //! /* Instruction & accounts setup ... */
 //!
@@ -62,9 +62,9 @@ use {
     chrono::Utc,
     mollusk_svm::{result::ProgramResult, Mollusk},
     result::{write_results, MolluskComputeUnitBenchResult},
-    solana_account::Account,
-    solana_instruction::Instruction,
-    solana_pubkey::Pubkey,
+    trezoa_account::Account,
+    trezoa_instruction::Instruction,
+    trezoa_pubkey::Pubkey,
     std::{path::PathBuf, process::Command},
 };
 
@@ -115,7 +115,7 @@ impl<'a> MolluskComputeUnitBencher<'a> {
     /// Execute the benches.
     pub fn execute(&mut self) {
         let table_header = Utc::now().to_string();
-        let solana_version = get_solana_version();
+        let trezoa_version = get_trezoa_version();
         let bench_results = std::mem::take(&mut self.benches)
             .into_iter()
             .map(|(name, instruction, accounts)| {
@@ -134,12 +134,12 @@ impl<'a> MolluskComputeUnitBencher<'a> {
                 MolluskComputeUnitBenchResult::new(name, result)
             })
             .collect::<Vec<_>>();
-        write_results(&self.out_dir, &table_header, &solana_version, bench_results);
+        write_results(&self.out_dir, &table_header, &trezoa_version, bench_results);
     }
 }
 
-pub fn get_solana_version() -> String {
-    match Command::new("solana").arg("--version").output() {
+pub fn get_trezoa_version() -> String {
+    match Command::new("trezoa").arg("--version").output() {
         Ok(output) if output.status.success() => {
             String::from_utf8_lossy(&output.stdout).trim().to_string()
         }

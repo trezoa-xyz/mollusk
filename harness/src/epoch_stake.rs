@@ -1,4 +1,4 @@
-use {solana_pubkey::Pubkey, std::collections::HashMap};
+use {trezoa_pubkey::Pubkey, std::collections::HashMap};
 
 /// A simple map of vote accounts to their epoch stake.
 ///

@@ -1,17 +1,17 @@
 SHELL := /usr/bin/env bash
 NIGHTLY_TOOLCHAIN := nightly-2025-10-07
-SOLANA_VERSION := 3.0.0
+TREZOA_VERSION := 3.0.0
 
 .PHONY: audit build-test-programs prepublish publish format format-check \
-	clippy test check-features all-checks nightly-version solana-version
+	clippy test check-features all-checks nightly-version trezoa-version
 
 # Print the nightly toolchain version for CI
 nightly-version:
 	@echo $(NIGHTLY_TOOLCHAIN)
 
-# Print the Solana version for CI
-solana-version:
-	@echo $(SOLANA_VERSION)
+# Print the Trezoa version for CI
+trezoa-version:
+	@echo $(TREZOA_VERSION)
 
 audit:
 	@cargo audit \
@@ -35,7 +35,7 @@ build-test-programs:
 
 # Pre-publish checks
 prepublish:
-	@agave-install init $(SOLANA_VERSION)
+	@trezoa-install init $(TREZOA_VERSION)
 	@rm -rf target
 	@cargo build
 	@$(MAKE) build-test-programs

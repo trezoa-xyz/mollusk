@@ -1,6 +1,6 @@
-#![cfg(target_os = "solana")]
+#![cfg(target_os = "trezoa")]
 
-use {solana_account_info::AccountInfo, solana_program_error::ProgramError, solana_pubkey::Pubkey};
+use {trezoa_account_info::AccountInfo, trezoa_program_error::ProgramError, trezoa_pubkey::Pubkey};
 
 // Declare the custom syscall that we expect to be registered.
 // This matches the `sol_burn_cus` syscall from the test.
@@ -8,7 +8,7 @@ extern "C" {
     fn sol_burn_cus(to_burn: u64) -> u64;
 }
 
-solana_program_entrypoint::entrypoint!(process_instruction);
+trezoa_program_entrypoint::entrypoint!(process_instruction);
 
 fn process_instruction(
     _program_id: &Pubkey,

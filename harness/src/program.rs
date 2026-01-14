@@ -1,19 +1,19 @@
-//! Module for working with Solana programs.
+//! Module for working with Trezoa programs.
 
 use {
-    agave_feature_set::FeatureSet,
-    agave_syscalls::create_program_runtime_environment_v1,
-    solana_account::Account,
-    solana_compute_budget::compute_budget::ComputeBudget,
-    solana_loader_v3_interface::state::UpgradeableLoaderState,
-    solana_loader_v4_interface::state::{LoaderV4State, LoaderV4Status},
-    solana_program_runtime::{
+    trezoa_feature_set::FeatureSet,
+    trezoa_syscalls::create_program_runtime_environment_v1,
+    trezoa_account::Account,
+    trezoa_compute_budget::compute_budget::ComputeBudget,
+    trezoa_loader_v3_interface::state::UpgradeableLoaderState,
+    trezoa_loader_v4_interface::state::{LoaderV4State, LoaderV4Status},
+    trezoa_program_runtime::{
         invoke_context::{BuiltinFunctionWithContext, InvokeContext},
         loaded_programs::{LoadProgramMetrics, ProgramCacheEntry, ProgramCacheForTxBatch},
-        solana_sbpf::program::BuiltinProgram,
+        trezoa_sbpf::program::BuiltinProgram,
     },
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
+    trezoa_pubkey::Pubkey,
+    trezoa_rent::Rent,
     std::{
         cell::{RefCell, RefMut},
         collections::HashMap,
@@ -22,9 +22,9 @@ use {
     },
 };
 
-/// Loader keys, re-exported from `solana_sdk` for convenience.
+/// Loader keys, re-exported from `trezoa_sdk` for convenience.
 pub mod loader_keys {
-    pub use solana_sdk_ids::{
+    pub use trezoa_sdk_ids::{
         bpf_loader::ID as LOADER_V2, bpf_loader_deprecated::ID as LOADER_V1,
         bpf_loader_upgradeable::ID as LOADER_V3, loader_v4::ID as LOADER_V4,
         native_loader::ID as NATIVE_LOADER,
@@ -33,8 +33,8 @@ pub mod loader_keys {
 
 #[cfg(feature = "precompiles")]
 pub mod precompile_keys {
-    use solana_pubkey::Pubkey;
-    pub use solana_sdk_ids::{
+    use trezoa_pubkey::Pubkey;
+    pub use trezoa_sdk_ids::{
         ed25519_program::ID as ED25519_PROGRAM, secp256k1_program::ID as SECP256K1_PROGRAM,
         secp256r1_program::ID as SECP256R1_PROGRAM,
     };
@@ -49,7 +49,7 @@ pub mod precompile_keys {
 
 #[cfg(not(feature = "precompiles"))]
 pub mod precompile_keys {
-    use solana_pubkey::Pubkey;
+    use trezoa_pubkey::Pubkey;
 
     pub(crate) const fn is_precompile(_program_id: &Pubkey) -> bool {
         false
@@ -172,7 +172,7 @@ impl ProgramCache {
         self.cache.borrow().find(program_id)
     }
 
-    // NOTE: These are only stubs. This will "just work", since Agave's SVM
+    // NOTE: These are only stubs. This will "just work", since Trezoa-team's SVM
     // stubs out program accounts in transaction execution already, noting that
     // the ELFs are already where they need to be: in the cache.
     pub(crate) fn get_all_keyed_program_accounts(&self) -> Vec<(Pubkey, Account)> {
@@ -238,37 +238,37 @@ impl Builtin {
 
 static BUILTINS: &[Builtin] = &[
     Builtin {
-        program_id: solana_system_program::id(),
+        program_id: trezoa_system_program::id(),
         name: "system_program",
-        entrypoint: solana_system_program::system_processor::Entrypoint::vm,
+        entrypoint: trezoa_system_program::system_processor::Entrypoint::vm,
     },
     Builtin {
         program_id: loader_keys::LOADER_V2,
-        name: "solana_bpf_loader_program",
-        entrypoint: solana_bpf_loader_program::Entrypoint::vm,
+        name: "trezoa_bpf_loader_program",
+        entrypoint: trezoa_bpf_loader_program::Entrypoint::vm,
     },
     Builtin {
         program_id: loader_keys::LOADER_V3,
-        name: "solana_bpf_loader_upgradeable_program",
-        entrypoint: solana_bpf_loader_program::Entrypoint::vm,
+        name: "trezoa_bpf_loader_upgradeable_program",
+        entrypoint: trezoa_bpf_loader_program::Entrypoint::vm,
     },
     #[cfg(feature = "all-builtins")]
     Builtin {
         program_id: loader_keys::LOADER_V1,
-        name: "solana_bpf_loader_deprecated_program",
-        entrypoint: solana_bpf_loader_program::Entrypoint::vm,
+        name: "trezoa_bpf_loader_deprecated_program",
+        entrypoint: trezoa_bpf_loader_program::Entrypoint::vm,
     },
     #[cfg(feature = "all-builtins")]
     Builtin {
         program_id: loader_keys::LOADER_V4,
-        name: "solana_loader_v4_program",
-        entrypoint: solana_loader_v4_program::Entrypoint::vm,
+        name: "trezoa_loader_v4_program",
+        entrypoint: trezoa_loader_v4_program::Entrypoint::vm,
     },
     #[cfg(feature = "all-builtins")]
     Builtin {
-        program_id: solana_sdk_ids::zk_elgamal_proof_program::id(),
+        program_id: trezoa_sdk_ids::zk_elgamal_proof_program::id(),
         name: "zk_elgamal_proof_program",
-        entrypoint: solana_zk_elgamal_proof_program::Entrypoint::vm,
+        entrypoint: trezoa_zk_elgamal_proof_program::Entrypoint::vm,
     },
 ];
 

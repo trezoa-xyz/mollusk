@@ -9,15 +9,15 @@ edition = { workspace = true }
 version = { workspace = true }
 
 [dependencies]
-agave-feature-set = { workspace = true }
+trezoa-feature-set = { workspace = true }
 mollusk-svm-fuzz-fs = { workspace = true }
 prost = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true }
-solana-account = { workspace = true }
-solana-keccak-hasher = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-transaction-context = { workspace = true }
+trezoa-account = { workspace = true }
+trezoa-keccak-hasher = { workspace = true }
+trezoa-pubkey = { workspace = true }
+trezoa-transaction-context = { workspace = true }
 
 [build-dependencies]
 prost-build = { workspace = true }

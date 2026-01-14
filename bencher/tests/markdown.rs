@@ -1,12 +1,12 @@
 use {
     mollusk_svm::Mollusk, mollusk_svm_bencher::MolluskComputeUnitBencher,
-    solana_instruction::Instruction, solana_pubkey::Pubkey,
+    trezoa_instruction::Instruction, trezoa_pubkey::Pubkey,
 };
 
 #[test]
 fn test_markdown() {
     std::env::set_var("SBF_OUT_DIR", "../target/deploy");
-    solana_logger::setup_with("");
+    trezoa_logger::setup_with("");
 
     let program_id = Pubkey::new_unique();
 

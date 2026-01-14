@@ -1,12 +1,12 @@
 use {
     mollusk_svm::{result::Check, Mollusk},
     rand0_7::thread_rng,
-    solana_account::{Account, WritableAccount},
-    solana_pubkey::Pubkey,
+    trezoa_account::{Account, WritableAccount},
+    trezoa_pubkey::Pubkey,
 };
 
 fn precompile_account() -> Account {
-    let mut account = Account::new(1, 0, &solana_sdk_ids::native_loader::id());
+    let mut account = Account::new(1, 0, &trezoa_sdk_ids::native_loader::id());
     account.set_executable(true);
     account
 }
@@ -18,13 +18,13 @@ fn test_secp256k1() {
 
     let msg = b"hello";
     let sk_bytes = secret_key.serialize();
-    let (sig, recid) = solana_secp256k1_program::sign_message(&sk_bytes, msg).unwrap();
+    let (sig, recid) = trezoa_secp256k1_program::sign_message(&sk_bytes, msg).unwrap();
     let pubkey = libsecp256k1::PublicKey::from_secret_key(&secret_key);
     let uncompressed = pubkey.serialize(); // 65 bytes, 0x04 || X(32) || Y(32)
     let mut uncompressed_64 = [0u8; 64];
     uncompressed_64.copy_from_slice(&uncompressed[1..65]);
-    let eth_address = solana_secp256k1_program::eth_address_from_pubkey(&uncompressed_64);
-    let instr = solana_secp256k1_program::new_secp256k1_instruction_with_signature(
+    let eth_address = trezoa_secp256k1_program::eth_address_from_pubkey(&uncompressed_64);
+    let instr = trezoa_secp256k1_program::new_secp256k1_instruction_with_signature(
         msg,
         &sig,
         recid,
@@ -36,7 +36,7 @@ fn test_secp256k1() {
         &[
             (Pubkey::new_unique(), Account::default()),
             (
-                solana_sdk_ids::secp256k1_program::id(),
+                trezoa_sdk_ids::secp256k1_program::id(),
                 precompile_account(),
             ),
         ],
@@ -54,11 +54,11 @@ fn test_ed25519() {
     let signature = keypair.sign(msg).to_bytes();
     let pubkey_bytes = keypair.public.to_bytes();
 
-    let instr = solana_ed25519_program::new_ed25519_instruction_with_signature(
+    let instr = trezoa_ed25519_program::new_ed25519_instruction_with_signature(
         msg,
-        <&[u8; solana_ed25519_program::SIGNATURE_SERIALIZED_SIZE]>::try_from(&signature[..])
+        <&[u8; trezoa_ed25519_program::SIGNATURE_SERIALIZED_SIZE]>::try_from(&signature[..])
             .unwrap(),
-        <&[u8; solana_ed25519_program::PUBKEY_SERIALIZED_SIZE]>::try_from(&pubkey_bytes[..])
+        <&[u8; trezoa_ed25519_program::PUBKEY_SERIALIZED_SIZE]>::try_from(&pubkey_bytes[..])
             .unwrap(),
     );
 
@@ -66,7 +66,7 @@ fn test_ed25519() {
         &instr,
         &[
             (Pubkey::new_unique(), Account::default()),
-            (solana_sdk_ids::ed25519_program::id(), precompile_account()),
+            (trezoa_sdk_ids::ed25519_program::id(), precompile_account()),
         ],
         &[Check::success()],
     );
@@ -88,7 +88,7 @@ fn test_secp256r1() {
     };
 
     let sig =
-        solana_secp256r1_program::sign_message(b"hello", &secret_key.private_key_to_der().unwrap())
+        trezoa_secp256r1_program::sign_message(b"hello", &secret_key.private_key_to_der().unwrap())
             .unwrap();
     let mut ctx = BigNumContext::new().unwrap();
     let pub_bytes = secret_key
@@ -99,17 +99,17 @@ fn test_secp256r1() {
             &mut ctx,
         )
         .unwrap();
-    let mut pubkey = [0u8; solana_secp256r1_program::COMPRESSED_PUBKEY_SERIALIZED_SIZE];
+    let mut pubkey = [0u8; trezoa_secp256r1_program::COMPRESSED_PUBKEY_SERIALIZED_SIZE];
     pubkey.copy_from_slice(&pub_bytes);
 
     let instr =
-        solana_secp256r1_program::new_secp256r1_instruction_with_signature(b"hello", &sig, &pubkey);
+        trezoa_secp256r1_program::new_secp256r1_instruction_with_signature(b"hello", &sig, &pubkey);
 
     mollusk.process_and_validate_instruction(
         &instr,
         &[
             (Pubkey::new_unique(), Account::default()),
-            (solana_sdk_ids::ed25519_program::id(), precompile_account()),
+            (trezoa_sdk_ids::ed25519_program::id(), precompile_account()),
         ],
         &[Check::success()],
     );

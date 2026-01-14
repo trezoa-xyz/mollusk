@@ -1,12 +1,12 @@
 #![cfg(any(feature = "fuzz", feature = "fuzz-fd"))]
 
 use {
-    agave_feature_set::FeatureSet,
+    trezoa_feature_set::FeatureSet,
     mollusk_svm::{result::Check, Mollusk},
     serial_test::serial,
-    solana_account::Account,
-    solana_instruction::Instruction,
-    solana_pubkey::Pubkey,
+    trezoa_account::Account,
+    trezoa_instruction::Instruction,
+    trezoa_pubkey::Pubkey,
     std::path::Path,
 };
 
@@ -82,15 +82,15 @@ impl<'a> TestSetup<'a> {
         let mollusk = Mollusk::default();
 
         let instruction =
-            solana_system_interface::instruction::transfer(sender, recipient, TRANSFER_AMOUNT);
+            trezoa_system_interface::instruction::transfer(sender, recipient, TRANSFER_AMOUNT);
         let accounts = vec![
             (
                 *sender,
-                Account::new(BASE_LAMPORTS, 0, &solana_sdk_ids::system_program::id()),
+                Account::new(BASE_LAMPORTS, 0, &trezoa_sdk_ids::system_program::id()),
             ),
             (
                 *recipient,
-                Account::new(BASE_LAMPORTS, 0, &solana_sdk_ids::system_program::id()),
+                Account::new(BASE_LAMPORTS, 0, &trezoa_sdk_ids::system_program::id()),
             ),
         ];
         let checks = vec![

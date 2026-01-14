@@ -1,9 +1,9 @@
 use {
     crate::{InvocationInspectCallback, Mollusk},
     sha2::{Digest, Sha256},
-    solana_program_runtime::invoke_context::{Executable, InvokeContext, RegisterTrace},
-    solana_pubkey::Pubkey,
-    solana_transaction_context::{InstructionAccount, InstructionContext},
+    trezoa_program_runtime::invoke_context::{Executable, InvokeContext, RegisterTrace},
+    trezoa_pubkey::Pubkey,
+    trezoa_transaction_context::{InstructionAccount, InstructionContext},
     std::{fs::File, io::Write},
 };
 
@@ -63,7 +63,7 @@ impl DefaultRegisterTracingCallback {
             let pc = regs[11];
             // From the executable fetch the instruction this program counter points to.
             let insn =
-                solana_program_runtime::solana_sbpf::ebpf::get_insn_unchecked(program, pc as usize)
+                trezoa_program_runtime::trezoa_sbpf::ebpf::get_insn_unchecked(program, pc as usize)
                     .to_array();
 
             // Persist them in files.

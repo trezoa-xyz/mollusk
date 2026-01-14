@@ -1,13 +1,13 @@
 use {
     mollusk_svm::Mollusk,
-    solana_account::Account,
-    solana_program_pack::Pack,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    spl_token_interface::state::{Account as TokenAccount, Mint},
+    trezoa_account::Account,
+    trezoa_program_pack::Pack,
+    trezoa_pubkey::Pubkey,
+    trezoa_rent::Rent,
+    tpl_token_interface::state::{Account as TokenAccount, Mint},
 };
 
-pub const ID: Pubkey = solana_pubkey::pubkey!("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb");
+pub const ID: Pubkey = trezoa_pubkey::pubkey!("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb");
 
 pub const ELF: &[u8] = include_bytes!("elf/token_2022.so");
 

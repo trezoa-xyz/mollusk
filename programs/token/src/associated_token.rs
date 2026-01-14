@@ -1,15 +1,15 @@
 use {
-    mollusk_svm::Mollusk, solana_account::Account, solana_program_pack::Pack,
-    solana_pubkey::Pubkey, solana_rent::Rent,
+    mollusk_svm::Mollusk, trezoa_account::Account, trezoa_program_pack::Pack,
+    trezoa_pubkey::Pubkey, trezoa_rent::Rent,
     spl_associated_token_account_interface::address::get_associated_token_address_with_program_id,
-    spl_token_interface::state::Account as TokenAccount,
+    tpl_token_interface::state::Account as TokenAccount,
 };
 
-pub const ID: Pubkey = solana_pubkey::pubkey!("ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL");
+pub const ID: Pubkey = trezoa_pubkey::pubkey!("ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL");
 const TOKEN_PROGRAM_ID: Pubkey =
-    solana_pubkey::pubkey!("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA");
+    trezoa_pubkey::pubkey!("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA");
 const TOKEN_2022_PROGRAM_ID: Pubkey =
-    solana_pubkey::pubkey!("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb");
+    trezoa_pubkey::pubkey!("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb");
 
 pub const ELF: &[u8] = include_bytes!("elf/associated_token.so");
 

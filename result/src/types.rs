@@ -1,12 +1,12 @@
 //! Core result types for SVM program execution.
 
 use {
-    solana_account::Account, solana_instruction::error::InstructionError,
-    solana_program_error::ProgramError, solana_pubkey::Pubkey,
-    solana_transaction_error::TransactionError,
+    trezoa_account::Account, trezoa_instruction::error::InstructionError,
+    trezoa_program_error::ProgramError, trezoa_pubkey::Pubkey,
+    trezoa_transaction_error::TransactionError,
 };
 #[cfg(feature = "inner-instructions")]
-use {solana_message::SanitizedMessage, solana_transaction_status_client_types::InnerInstruction};
+use {trezoa_message::SanitizedMessage, trezoa_transaction_status_client_types::InnerInstruction};
 
 /// The result code of the program's execution.
 #[derive(Clone, Debug, PartialEq, Eq)]

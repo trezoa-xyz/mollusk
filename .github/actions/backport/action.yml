@@ -6,7 +6,7 @@ inputs:
     description: The trigger label (i.e., v2.0, v1.18)
     required: true
   base_branch:
-    description: The base branch to backport to (i.e., solana-v2.0, solana-v1.18)
+    description: The base branch to backport to (i.e., trezoa-v2.0, trezoa-v1.18)
     required: true
   github_token:
     description: GitHub token for authentication

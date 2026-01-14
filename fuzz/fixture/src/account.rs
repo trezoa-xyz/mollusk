@@ -1,8 +1,8 @@
 //! An account with an address: `(Pubkey, Account)`.
 
 use {
-    super::proto::AcctState as ProtoAccount, solana_account::Account, solana_keccak_hasher::Hasher,
-    solana_pubkey::Pubkey,
+    super::proto::AcctState as ProtoAccount, trezoa_account::Account, trezoa_keccak_hasher::Hasher,
+    trezoa_pubkey::Pubkey,
 };
 
 impl From<ProtoAccount> for (Pubkey, Account) {

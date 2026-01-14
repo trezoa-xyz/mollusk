@@ -9,7 +9,7 @@ use {
     config::ConfigFile,
     mollusk_svm::{result::Compare, Mollusk},
     runner::CusReport,
-    solana_pubkey::Pubkey,
+    trezoa_pubkey::Pubkey,
     std::{fs, path::Path, str::FromStr},
 };
 
@@ -140,7 +140,7 @@ fn add_elf_to_mollusk(mollusk: &mut Mollusk, elf_path: &str, program_id: &Pubkey
     let elf = mollusk_svm::file::read_file(elf_path);
     mollusk.add_program_with_loader_and_elf(
         program_id,
-        &solana_sdk_ids::bpf_loader_upgradeable::id(),
+        &trezoa_sdk_ids::bpf_loader_upgradeable::id(),
         &elf,
     );
 }
