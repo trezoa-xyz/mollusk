@@ -18,7 +18,7 @@ pub fn account() -> Account {
     mollusk_svm::program::create_program_account_loader_v1(ELF)
 }
 
-/// Get the key and account for the SPL Memo program V1.
+/// Get the key and account for the TPL Memo program V1.
 pub fn keyed_account() -> (Pubkey, Account) {
     (ID, account())
 }

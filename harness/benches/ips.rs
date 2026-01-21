@@ -3,7 +3,7 @@ use {
     criterion::{criterion_group, criterion_main, Criterion, Throughput},
     mollusk_svm::{result::Check, Mollusk},
     trezoa_account::Account,
-    trezoa_native_token::LAMPORTS_PER_SOL,
+    trezoa_native_token::LAMPORTS_PER_TRZ,
     trezoa_pubkey::Pubkey,
     trezoa_system_program::system_processor::DEFAULT_COMPUTE_UNITS,
 };
@@ -12,7 +12,7 @@ fn transfer_checked_unchecked(c: &mut Criterion) {
     let sender = Pubkey::new_unique();
     let recipient = Pubkey::new_unique();
 
-    let base_lamports = 100 * LAMPORTS_PER_SOL;
+    let base_lamports = 100 * LAMPORTS_PER_TRZ;
     let transfer_amount = 1;
 
     let instruction =

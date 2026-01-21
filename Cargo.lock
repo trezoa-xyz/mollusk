@@ -2406,7 +2406,7 @@ dependencies = [
  "trezoa-program-pack",
  "trezoa-pubkey 4.0.0",
  "trezoa-rent",
- "spl-associated-token-account-interface",
+ "tpl-associated-token-account-interface",
  "tpl-token-interface",
 ]
 
@@ -4831,7 +4831,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "spl-associated-token-account-interface"
+name = "tpl-associated-token-account-interface"
 version = "2.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e6433917b60441d68d99a17e121d9db0ea15a9a69c0e5afa34649cf5ba12612f"

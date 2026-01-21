@@ -29,7 +29,7 @@ jobs:
       - name: Get Trezoa version
         id: trezoa
         run: echo "version=$(make trezoa-version)" >> $GITHUB_OUTPUT
-      - uses: metaplex-foundation/actions/install-trezoa@v1
+      - uses: trezoaplex-foundation/actions/install-trezoa@v1
         with:
           cache: true
           version: ${{ steps.trezoa.outputs.version }}
@@ -59,7 +59,7 @@ jobs:
       - name: Get Trezoa version
         id: trezoa
         run: echo "version=$(make trezoa-version)" >> $GITHUB_OUTPUT
-      - uses: metaplex-foundation/actions/install-trezoa@v1
+      - uses: trezoaplex-foundation/actions/install-trezoa@v1
         with:
           cache: true
           version: ${{ steps.trezoa.outputs.version }}

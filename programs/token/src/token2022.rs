@@ -25,7 +25,7 @@ pub fn account() -> Account {
     mollusk_svm::program::create_program_account_loader_v3(&ID)
 }
 
-/// Get the key and account for the SPL Token-2022 program.
+/// Get the key and account for the TPL Token-2022 program.
 pub fn keyed_account() -> (Pubkey, Account) {
     (ID, account())
 }

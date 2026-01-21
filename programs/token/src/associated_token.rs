@@ -1,7 +1,7 @@
 use {
     mollusk_svm::Mollusk, trezoa_account::Account, trezoa_program_pack::Pack,
     trezoa_pubkey::Pubkey, trezoa_rent::Rent,
-    spl_associated_token_account_interface::address::get_associated_token_address_with_program_id,
+    trz_associated_token_account_interface::address::get_associated_token_address_with_program_id,
     tpl_token_interface::state::Account as TokenAccount,
 };
 
@@ -27,7 +27,7 @@ pub fn account() -> Account {
     mollusk_svm::program::create_program_account_loader_v2(ELF)
 }
 
-/// Get the key and account for the SPL Associated Token program.
+/// Get the key and account for the TPL Associated Token program.
 pub fn keyed_account() -> (Pubkey, Account) {
     (ID, account())
 }
