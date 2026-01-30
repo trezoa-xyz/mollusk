@@ -37,7 +37,7 @@
 //! markdown file will be written.
 //!
 //! Developers can invoke this benchmark test with `cargo bench`. They may need
-//! to add a bench to the project's `Cargo.toml`.
+//! to add a bench to the trezoa's `Cargo.toml`.
 //!
 //! ```toml
 //! [[bench]]
